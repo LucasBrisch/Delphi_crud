@@ -16,7 +16,7 @@ object Form3: TForm3
     Top = 0
     Width = 767
     Height = 517
-    ActivePage = Professores
+    ActivePage = TabSheet4
     Align = alClient
     TabOrder = 0
     object TabSheet4: TTabSheet
@@ -33,7 +33,7 @@ object Form3: TForm3
         TabOrder = 0
         ExplicitTop = 8
         ExplicitWidth = 806
-        object Button13: TButton
+        object Adicionar_turmas: TButton
           AlignWithMargins = True
           Left = 16
           Top = 1
@@ -44,10 +44,10 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button1'
+          Caption = 'Adicionar'
           TabOrder = 0
         end
-        object Button14: TButton
+        object Editar_turmas: TButton
           AlignWithMargins = True
           Left = 142
           Top = 1
@@ -58,11 +58,11 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button2'
+          Caption = 'Editar'
           TabOrder = 1
           ExplicitLeft = 322
         end
-        object Button15: TButton
+        object Excluir_turmas: TButton
           AlignWithMargins = True
           Left = 268
           Top = 1
@@ -73,12 +73,12 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button3'
+          Caption = 'Excluir'
           TabOrder = 2
           ExplicitLeft = 628
         end
       end
-      object StringGrid1: TStringGrid
+      object Grid_Turmas: TStringGrid
         Left = 0
         Top = 65
         Width = 759
@@ -105,7 +105,7 @@ object Form3: TForm3
         TabOrder = 0
         ExplicitTop = 8
         ExplicitWidth = 806
-        object Button10: TButton
+        object Adicionar_Professores: TButton
           AlignWithMargins = True
           Left = 16
           Top = 1
@@ -116,10 +116,10 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button1'
+          Caption = 'Adicionar'
           TabOrder = 0
         end
-        object Button11: TButton
+        object Editar_professores: TButton
           AlignWithMargins = True
           Left = 142
           Top = 1
@@ -130,11 +130,11 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button2'
+          Caption = 'Editar'
           TabOrder = 1
           ExplicitLeft = 322
         end
-        object Button12: TButton
+        object Excluir_professores: TButton
           AlignWithMargins = True
           Left = 268
           Top = 1
@@ -145,12 +145,12 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button3'
+          Caption = 'Excluir'
           TabOrder = 2
           ExplicitLeft = 628
         end
       end
-      object StringGrid2: TStringGrid
+      object Grid_professores: TStringGrid
         Left = 0
         Top = 65
         Width = 759
@@ -178,7 +178,7 @@ object Form3: TForm3
         TabOrder = 0
         ExplicitTop = 8
         ExplicitWidth = 806
-        object Button4: TButton
+        object Adicionar_alunos: TButton
           AlignWithMargins = True
           Left = 16
           Top = 1
@@ -189,10 +189,10 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button1'
+          Caption = 'Adicionar'
           TabOrder = 0
         end
-        object Button5: TButton
+        object Editar_alunos: TButton
           AlignWithMargins = True
           Left = 142
           Top = 1
@@ -203,11 +203,11 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button2'
+          Caption = 'Editar'
           TabOrder = 1
           ExplicitLeft = 322
         end
-        object Button6: TButton
+        object Excluir_alunos: TButton
           AlignWithMargins = True
           Left = 268
           Top = 1
@@ -218,25 +218,21 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button3'
+          Caption = 'Excluir'
           TabOrder = 2
           ExplicitLeft = 628
         end
       end
-      object StringGrid5: TStringGrid
+      object Grid_Alunos: TStringGrid
         Left = 0
         Top = 65
         Width = 759
         Height = 422
         Align = alClient
-        ColCount = 3
+        ColCount = 2
         DefaultColWidth = 260
         DefaultColAlignment = taCenter
         TabOrder = 1
-        ExplicitLeft = 379
-        ExplicitTop = 1
-        ExplicitWidth = 379
-        ExplicitHeight = 63
       end
     end
     object TabSheet3: TTabSheet
@@ -253,7 +249,7 @@ object Form3: TForm3
         TabOrder = 0
         ExplicitTop = 8
         ExplicitWidth = 806
-        object Button7: TButton
+        object Adicionar_matriculas: TButton
           AlignWithMargins = True
           Left = 16
           Top = 1
@@ -264,10 +260,10 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button1'
+          Caption = 'Adicionar'
           TabOrder = 0
         end
-        object Button8: TButton
+        object Editar_matriculas: TButton
           AlignWithMargins = True
           Left = 142
           Top = 1
@@ -278,11 +274,11 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button2'
+          Caption = 'Editar'
           TabOrder = 1
           ExplicitLeft = 322
         end
-        object Button9: TButton
+        object Excluir_matriculas: TButton
           AlignWithMargins = True
           Left = 268
           Top = 1
@@ -293,12 +289,12 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button3'
+          Caption = 'Excluir'
           TabOrder = 2
           ExplicitLeft = 628
         end
       end
-      object StringGrid3: TStringGrid
+      object Grid_Matriculas: TStringGrid
         Left = 0
         Top = 65
         Width = 759
@@ -327,7 +323,7 @@ object Form3: TForm3
         ExplicitLeft = 3
         ExplicitTop = 16
         ExplicitWidth = 726
-        object Button1: TButton
+        object Adicionar_disciplinas: TButton
           AlignWithMargins = True
           Left = 16
           Top = 1
@@ -338,11 +334,11 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button1'
+          Caption = 'Adicionar'
           TabOrder = 0
           ExplicitLeft = 1
         end
-        object Button2: TButton
+        object Editar_disciplinas: TButton
           AlignWithMargins = True
           Left = 142
           Top = 1
@@ -353,11 +349,11 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button2'
+          Caption = 'Editar'
           TabOrder = 1
           ExplicitLeft = 298
         end
-        object Button3: TButton
+        object Excluir_disciplinas: TButton
           AlignWithMargins = True
           Left = 268
           Top = 1
@@ -368,18 +364,18 @@ object Form3: TForm3
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alLeft
-          Caption = 'Button3'
+          Caption = 'Excluir'
           TabOrder = 2
           ExplicitLeft = 593
         end
       end
-      object StringGrid4: TStringGrid
+      object Grid_Disciplinas: TStringGrid
         Left = 0
         Top = 65
         Width = 759
         Height = 422
         Align = alClient
-        ColCount = 3
+        ColCount = 2
         DefaultColWidth = 260
         DefaultColAlignment = taCenter
         TabOrder = 1

@@ -124,7 +124,27 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="uMain.pas">
-            <Form>Form3</Form>
+            <Form>CRUD_escolar</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uAlunosModal.pas">
+            <Form>frmAlunosCRUD</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uProfessoresModal.pas">
+            <Form>frmProfessoresCRUD</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uDisciplinasModal.pas">
+            <Form>frmDisciplinasCRUD</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uTurmasModal.pas">
+            <Form>frmTurmasCRUD</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uMatriculasModal.pas">
+            <Form>frmMatriculasCRUD</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

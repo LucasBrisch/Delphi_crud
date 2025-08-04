@@ -1,7 +1,7 @@
-object Form3: TForm3
+object CRUD_escolar: TCRUD_escolar
   Left = 0
   Top = 0
-  Caption = 'Form3'
+  Caption = 'CRUD_escolar'
   ClientHeight = 517
   ClientWidth = 767
   Color = clBtnFace
@@ -16,7 +16,7 @@ object Form3: TForm3
     Top = 0
     Width = 767
     Height = 517
-    ActivePage = TabSheet4
+    ActivePage = Professores
     Align = alClient
     TabOrder = 0
     object TabSheet4: TTabSheet
@@ -191,6 +191,8 @@ object Form3: TForm3
           Align = alLeft
           Caption = 'Adicionar'
           TabOrder = 0
+          OnClick = Adicionar_alunosClick
+          ExplicitTop = -1
         end
         object Editar_alunos: TButton
           AlignWithMargins = True
@@ -233,6 +235,7 @@ object Form3: TForm3
         DefaultColWidth = 260
         DefaultColAlignment = taCenter
         TabOrder = 1
+        ExplicitTop = 67
       end
     end
     object TabSheet3: TTabSheet

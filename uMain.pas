@@ -5,10 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls,
-  Vcl.Grids;
+  Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal, uTurmasModal, uMatriculasModal;
 
 type
-  TForm3 = class(TForm)
+  TCRUD_escolar = class(TForm)
     PageControl1: TPageControl;
     Professores: TTabSheet;
     TabSheet2: TTabSheet;
@@ -40,6 +40,7 @@ type
     Grid_Matriculas: TStringGrid;
     Grid_Disciplinas: TStringGrid;
     Grid_Alunos: TStringGrid;
+    procedure Adicionar_alunosClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,10 +48,15 @@ type
   end;
 
 var
-  Form3: TForm3;
+  CRUD_escolar: TCRUD_escolar;
 
 implementation
 
 {$R *.dfm}
+
+procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
+begin
+frmAlunosCRUD.Show;
+end;
 
 end.

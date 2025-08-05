@@ -10,6 +10,7 @@ object CRUD_escolar: TCRUD_escolar
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
   object PageControl1: TPageControl

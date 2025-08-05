@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, uconnection,
-  Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal, uTurmasModal, uMatriculasModal;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, uconnection, system.Generics.Collections,
+  Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal, uTurmasModal, uMatriculasModal, ualuno;
 
 type
   TCRUD_escolar = class(TForm)
@@ -43,10 +43,14 @@ type
     procedure fillstudents;
     procedure FormShow(Sender: TObject);
     procedure Excluir_alunosClick(Sender: TObject);
+    procedure popularListaAlunos;
+    procedure FormCreate(Sender: TObject);
 
   private
     { Private declarations }
   public
+
+  AlunosLista : Tobjectlist <taluno>;
 
   end;
 
@@ -55,6 +59,7 @@ var
 
 implementation
 
+
 {$R *.dfm}
 
 procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
@@ -62,6 +67,7 @@ procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
 var ID: integer;
 begin
   frmAlunosCRUD.Showmodal;
+  popularListaAlunos;
   fillstudents;
 end;
 
@@ -95,26 +101,50 @@ end;
 procedure TCRUD_escolar.fillstudents;
 var
   id, nome: string;
+  aluno: taluno;
+  I: integer;
 begin
   Alunosbox.Clear;
 
-  dmDatabase.SelectAlunos.Close;
-  dmDatabase.SelectAlunos.Open;
-
-  while not dmDatabase.SelectAlunos.Eof do
-  begin
-    id := dmDatabase.SelectAlunos.FieldByName('id').AsString;
-    nome := dmDatabase.SelectAlunos.FieldByName('nome').AsString;
-
-    Alunosbox.AddItem(id + ' - ' + nome, nil);
-
-    dmDatabase.SelectAlunos.Next;
+  for I := 0 to AlunosLista.Count - 1 do begin
+    aluno := AlunosLista[I];
+    Alunosbox.AddItem(inttostr(Aluno.Codigo) + ' - ' + aluno.Nome, nil);
   end;
+
+end;
+
+procedure TCRUD_escolar.FormCreate(Sender: TObject);
+begin
+  Alunoslista := TObjectList<TAluno>.Create(True);
+  popularlistaAlunos;
 end;
 
 procedure TCRUD_escolar.FormShow(Sender: TObject);
 begin
 fillstudents;
+end;
+
+procedure TCRUD_escolar.popularListaAlunos;
+var
+aluno : TAluno;
+begin
+  if not Assigned(dmDatabase) or not Assigned(dmDatabase.SelectAlunos) then Exit;
+
+  AlunosLista.Clear;
+
+  dmDatabase.SelectAlunos.Close;
+  dmDatabase.SelectAlunos.SQL.Text := 'SELECT id, nome FROM alunos WHERE ativo = TRUE';
+  dmDatabase.SelectAlunos.Open;
+
+while not dmDatabase.SelectAlunos.Eof do
+begin
+aluno := TAluno.Create();
+aluno.Codigo := dmDatabase.SelectAlunos.FieldByName('id').AsInteger;
+aluno.Nome := dmDatabase.SelectAlunos.FieldByName('nome').AsString;
+
+AlunosLista.Add(aluno);
+dmDatabase.SelectAlunos.Next;
+end;
 end;
 
 end.

@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, uconnection,
   Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal, uTurmasModal, uMatriculasModal;
 
 type
@@ -55,8 +55,11 @@ implementation
 {$R *.dfm}
 
 procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
+
+var ID: integer;
 begin
 frmAlunosCRUD.Show;
+
 end;
 
 end.

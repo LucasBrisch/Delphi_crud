@@ -103,8 +103,6 @@ object CRUD_escolar: TCRUD_escolar
         Caption = 'Botoes_disciplinas'
         ShowCaption = False
         TabOrder = 0
-        ExplicitTop = 8
-        ExplicitWidth = 806
         object Adicionar_Professores: TButton
           AlignWithMargins = True
           Left = 16
@@ -132,7 +130,6 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Editar'
           TabOrder = 1
-          ExplicitLeft = 322
         end
         object Excluir_professores: TButton
           AlignWithMargins = True
@@ -147,7 +144,6 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Excluir'
           TabOrder = 2
-          ExplicitLeft = 628
         end
       end
       object Grid_professores: TStringGrid
@@ -160,8 +156,6 @@ object CRUD_escolar: TCRUD_escolar
         DefaultColWidth = 260
         DefaultColAlignment = taCenter
         TabOrder = 1
-        ExplicitWidth = 806
-        ExplicitHeight = 418
       end
     end
     object TabSheet2: TTabSheet

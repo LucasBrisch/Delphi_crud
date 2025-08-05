@@ -10,6 +10,7 @@ object frmAlunosCRUD: TfrmAlunosCRUD
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object ModalAlunos: TPanel
     Left = 0
@@ -46,7 +47,6 @@ object frmAlunosCRUD: TfrmAlunosCRUD
       Caption = 'AlunoNomeHolder'
       ShowCaption = False
       TabOrder = 0
-      ExplicitTop = 113
       object AlunoNomeLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -70,7 +70,6 @@ object frmAlunosCRUD: TfrmAlunosCRUD
         Align = alTop
         TabOrder = 0
         TextHint = 'Nome do aluno'
-        ExplicitWidth = 257
       end
     end
     object AlunoCodHolder: TPanel
@@ -84,7 +83,6 @@ object frmAlunosCRUD: TfrmAlunosCRUD
       Caption = 'Panel2'
       ShowCaption = False
       TabOrder = 1
-      ExplicitTop = 113
       object AlunoCodLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -106,6 +104,7 @@ object frmAlunosCRUD: TfrmAlunosCRUD
         Width = 273
         Height = 23
         Align = alTop
+        Enabled = False
         TabOrder = 0
         TextHint = 'C'#243'digo do aluno'
       end
@@ -120,9 +119,7 @@ object frmAlunosCRUD: TfrmAlunosCRUD
       Align = alTop
       Caption = 'Enviar'
       TabOrder = 2
-      ExplicitLeft = 152
-      ExplicitTop = 288
-      ExplicitWidth = 75
+      OnClick = EnviarAlunoClick
     end
     object CancelarAluno: TButton
       AlignWithMargins = True
@@ -133,8 +130,6 @@ object frmAlunosCRUD: TfrmAlunosCRUD
       Align = alTop
       Caption = 'Cancelar'
       TabOrder = 3
-      ExplicitLeft = 0
-      ExplicitTop = 323
     end
   end
 end

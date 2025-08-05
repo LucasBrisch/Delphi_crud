@@ -147,6 +147,11 @@
             <Form>frmMatriculasCRUD</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="uConnection.pas">
+            <Form>DmDatabase</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

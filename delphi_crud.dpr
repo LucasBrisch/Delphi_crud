@@ -7,7 +7,8 @@ uses
   uProfessoresModal in 'uProfessoresModal.pas' {frmProfessoresCRUD},
   uDisciplinasModal in 'uDisciplinasModal.pas' {frmDisciplinasCRUD},
   uTurmasModal in 'uTurmasModal.pas' {frmTurmasCRUD},
-  uMatriculasModal in 'uMatriculasModal.pas' {frmMatriculasCRUD};
+  uMatriculasModal in 'uMatriculasModal.pas' {frmMatriculasCRUD},
+  uConnection in 'uConnection.pas' {DmDatabase: TDataModule};
 
 {$R *.res}
 
@@ -20,5 +21,6 @@ begin
   Application.CreateForm(TfrmDisciplinasCRUD, frmDisciplinasCRUD);
   Application.CreateForm(TfrmTurmasCRUD, frmTurmasCRUD);
   Application.CreateForm(TfrmMatriculasCRUD, frmMatriculasCRUD);
+  Application.CreateForm(TDmDatabase, DmDatabase);
   Application.Run;
 end.

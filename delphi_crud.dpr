@@ -16,11 +16,11 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TCRUD_escolar, CRUD_escolar);
+  Application.CreateForm(TDmDatabase, DmDatabase);
   Application.CreateForm(TfrmAlunosCRUD, frmAlunosCRUD);
   Application.CreateForm(TfrmProfessoresCRUD, frmProfessoresCRUD);
   Application.CreateForm(TfrmDisciplinasCRUD, frmDisciplinasCRUD);
   Application.CreateForm(TfrmTurmasCRUD, frmTurmasCRUD);
   Application.CreateForm(TfrmMatriculasCRUD, frmMatriculasCRUD);
-  Application.CreateForm(TDmDatabase, DmDatabase);
   Application.Run;
 end.

@@ -20,6 +20,7 @@ type
     CancelarAluno: TButton;
     procedure EnviarAlunoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure Resetform;
   private
     { Private declarations }
   public
@@ -48,6 +49,7 @@ begin
 
     ShowMessage('Aluno inserido com sucesso!');
     ModalResult := mrOk;  // mrOK serve pra informar sucesso
+    resetform;
   except
     on E: Exception do
       ShowMessage('Erro ao inserir aluno: ' + E.Message);
@@ -56,14 +58,22 @@ begin
 
 end;
 
+
+
 procedure TfrmAlunosCRUD.FormShow(Sender: TObject);
 
+begin
+Resetform;
+end;
+
+procedure TfrmAlunosCRUD.Resetform;
 begin
 dmDatabase.Insertquery.SQL.Text := 'SELECT COALESCE(MAX(id), 0) + 1 AS id FROM alunos';
 dmDatabase.Insertquery.Open;
 ID := dmDatabase.Insertquery.FieldByName('id').AsInteger;
 dmDatabase.Insertquery.Close;
 AlunoCodEdit.Text := ID.ToString;
+AlunoNomeEdit.Text := ''
 end;
 
 end.

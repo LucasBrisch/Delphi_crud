@@ -35,16 +35,18 @@ type
     Adicionar_turmas: TButton;
     Editar_turmas: TButton;
     Excluir_turmas: TButton;
-    Grid_Turmas: TStringGrid;
     Grid_professores: TStringGrid;
     Grid_Matriculas: TStringGrid;
     Grid_Disciplinas: TStringGrid;
-    Grid_Alunos: TStringGrid;
+    AlunosBox: TListBox;
     procedure Adicionar_alunosClick(Sender: TObject);
+    procedure fillstudents;
+    procedure FormShow(Sender: TObject);
+
   private
     { Private declarations }
   public
-    { Public declarations }
+
   end;
 
 var
@@ -58,8 +60,35 @@ procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
 
 var ID: integer;
 begin
-frmAlunosCRUD.Show;
+  frmAlunosCRUD.Showmodal;
+  fillstudents;
+end;
 
+procedure TCRUD_escolar.fillstudents;
+var
+  id, nome: string;
+begin
+  Alunosbox.Clear;
+
+  dmDatabase.SelectAlunos.Close;
+  dmDatabase.SelectAlunos.Open;
+
+  while not dmDatabase.SelectAlunos.Eof do
+  begin
+    id := dmDatabase.SelectAlunos.FieldByName('id').AsString;
+    nome := dmDatabase.SelectAlunos.FieldByName('nome').AsString;
+
+    Alunosbox.AddItem(id + ' - ' + nome, nil);
+
+    dmDatabase.SelectAlunos.Next;
+  end;
+end;
+
+procedure TCRUD_escolar.FormShow(Sender: TObject);
+begin
+fillstudents;
 end;
 
 end.
+
+

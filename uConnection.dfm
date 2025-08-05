@@ -8,8 +8,8 @@ object DmDatabase: TDmDatabase
       'Password=root'
       'DriverID=PG')
     Connected = True
-    Left = 176
-    Top = 88
+    Left = 232
+    Top = 16
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink
     VendorLib = 
@@ -29,5 +29,10 @@ object DmDatabase: TDmDatabase
       'select * from alunos')
     Left = 72
     Top = 232
+  end
+  object DeleteQuery: TFDQuery
+    Connection = Conexao
+    Left = 112
+    Top = 88
   end
 end

@@ -196,6 +196,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Excluir'
           TabOrder = 2
+          OnClick = Excluir_alunosClick
         end
       end
       object AlunosBox: TListBox

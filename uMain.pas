@@ -42,6 +42,7 @@ type
     procedure Adicionar_alunosClick(Sender: TObject);
     procedure fillstudents;
     procedure FormShow(Sender: TObject);
+    procedure Excluir_alunosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -62,6 +63,33 @@ var ID: integer;
 begin
   frmAlunosCRUD.Showmodal;
   fillstudents;
+end;
+
+procedure TCRUD_escolar.Excluir_alunosClick(Sender: TObject);
+var
+  linhaSelecionada: string;
+  posicaoSeparador: Integer;
+  idString: string;
+  alunoID: Integer;
+begin
+  if Alunosbox.ItemIndex >= 0 then
+  begin
+    linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
+
+    // O 'Pos' encontra a posição do separador " - "
+    posicaoSeparador := Pos(' - ', linhaSelecionada);
+    // O 'Copy' extrai o que está antes do separador
+    idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
+
+      try
+        dmDatabase.InsertQuery.SQL.Text := 'UPDATE alunos SET ativo = false WHERE ID = ' + idString;
+        dmDatabase.InsertQuery.ExecSQL;
+        showmessage(idstring)
+      except
+        showmessage('erro')
+      end;
+
+  end;
 end;
 
 procedure TCRUD_escolar.fillstudents;

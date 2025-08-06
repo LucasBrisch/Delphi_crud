@@ -138,7 +138,7 @@ end;
 
 
 dmDatabase.SelectQuery.Close;
-dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome FROM disciplinas WHERE id = '+idstring;;
+dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome FROM disciplinas WHERE id = '+idstring;
 dmDatabase.SelectQuery.Open;
 
 uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod := dmDatabase.SelectQuery.FieldByName('id').AsInteger;

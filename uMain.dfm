@@ -183,6 +183,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Editar'
           TabOrder = 1
+          OnClick = Editar_alunosClick
         end
         object Excluir_alunos: TButton
           AlignWithMargins = True
@@ -214,10 +215,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitLeft = 136
-        ExplicitTop = 152
-        ExplicitWidth = 121
-        ExplicitHeight = 97
       end
     end
     object TabSheet3: TTabSheet

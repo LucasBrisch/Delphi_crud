@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, uconnection;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, uconnection, ualuno;
 
 type
   TfrmAlunosCRUD = class(TForm)
@@ -26,6 +26,8 @@ type
   public
     { Public declarations }
     var ID: integer;
+    edit : boolean;
+    aluno_editado : tAluno;
   end;
 
 var
@@ -44,12 +46,25 @@ begin
   end;
 
   try
+  if not edit then begin
+
     dmDatabase.InsertQuery.SQL.Text := 'INSERT INTO alunos (id, nome) VALUES ('+ inttostr(ID) + ', '+QuotedStr(AlunoNomeEdit.Text) +')';
     dmDatabase.InsertQuery.ExecSQL;
 
     ShowMessage('Aluno inserido com sucesso!');
     ModalResult := mrOk;  // mrOK serve pra informar sucesso
     resetform;
+  end else if edit then begin
+    dmDatabase.InsertQuery.SQL.Text := 'UPDATE alunos SET nome = ' + QuotedStr(AlunoNomeEdit.Text) + ' WHERE id = ' + alunocodedit.Text;
+    dmDatabase.InsertQuery.ExecSQL;
+
+    ShowMessage('Aluno editado com sucesso!');
+    ModalResult := mrOk;  // mrOK serve pra informar sucesso
+    resetform;
+    edit := false;
+
+  end;
+
   except
     on E: Exception do
       ShowMessage('Erro ao inserir aluno: ' + E.Message);
@@ -63,7 +78,14 @@ end;
 procedure TfrmAlunosCRUD.FormShow(Sender: TObject);
 
 begin
-Resetform;
+if edit then begin
+
+Alunocodedit.text := inttostr(aluno_editado.Codigo);
+Alunonomeedit.text := aluno_editado.nome;
+
+end else if not edit then begin
+  Resetform;
+end;
 end;
 
 procedure TfrmAlunosCRUD.Resetform;

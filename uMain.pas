@@ -45,6 +45,7 @@ type
     procedure Excluir_alunosClick(Sender: TObject);
     procedure popularListaAlunos;
     procedure FormCreate(Sender: TObject);
+    procedure Editar_alunosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -64,11 +65,42 @@ implementation
 
 procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
 
-var ID: integer;
 begin
   frmAlunosCRUD.Showmodal;
   popularListaAlunos;
   fillstudents;
+end;
+
+procedure TCRUD_escolar.Editar_alunosClick(Sender: TObject);
+var linhaselecionada, idString, nome : string;
+posicaoseparador : integer;
+begin
+uAlunosmodal.frmAlunosCRUD.edit := true;
+
+
+
+if Alunosbox.ItemIndex = -1 then begin
+  showmessage ('por favor escolha um aluno para ser editado');
+  exit
+end;
+    linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
+    // O 'Pos' encontra a posição do separador " - "
+    posicaoSeparador := Pos(' - ', linhaSelecionada);
+    // O 'Copy' extrai o que está antes do separador
+    idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
+
+
+dmDatabase.SelectAlunos.Close;
+dmDatabase.SelectAlunos.SQL.Text := 'SELECT id, nome FROM alunos WHERE id = '+idstring;;
+uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome := '';
+dmDatabase.SelectAlunos.Open;
+
+uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo := dmDatabase.SelectAlunos.FieldByName('id').AsInteger;
+uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome := dmDatabase.SelectAlunos.FieldByName('nome').AsString;
+
+frmAlunosCRUD.ShowModal;
+popularListaAlunos;
+fillstudents;
 end;
 
 procedure TCRUD_escolar.Excluir_alunosClick(Sender: TObject);
@@ -90,7 +122,9 @@ begin
       try
         dmDatabase.InsertQuery.SQL.Text := 'UPDATE alunos SET ativo = false WHERE ID = ' + idString;
         dmDatabase.InsertQuery.ExecSQL;
-        showmessage(idstring)
+        showmessage('excluido com sucesso');
+        popularListaAlunos;
+        fillstudents;
       except
         showmessage('erro')
       end;
@@ -116,11 +150,13 @@ end;
 procedure TCRUD_escolar.FormCreate(Sender: TObject);
 begin
   Alunoslista := TObjectList<TAluno>.Create(True);
+
   popularlistaAlunos;
 end;
 
 procedure TCRUD_escolar.FormShow(Sender: TObject);
 begin
+uAlunosmodal.frmAlunosCRUD.aluno_editado := taluno.Create();
 fillstudents;
 end;
 
@@ -133,7 +169,7 @@ begin
   AlunosLista.Clear;
 
   dmDatabase.SelectAlunos.Close;
-  dmDatabase.SelectAlunos.SQL.Text := 'SELECT id, nome FROM alunos WHERE ativo = TRUE';
+  dmDatabase.SelectAlunos.SQL.Text := 'SELECT id, nome FROM alunos WHERE ativo = TRUE order by ID';
   dmDatabase.SelectAlunos.Open;
 
 while not dmDatabase.SelectAlunos.Eof do

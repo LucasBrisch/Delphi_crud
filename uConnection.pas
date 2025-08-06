@@ -15,7 +15,7 @@ type
     Conexao: TFDConnection;
     FDPhysPgDriverLink1: TFDPhysPgDriverLink;
     insertQuery: TFDQuery;
-    SelectAlunos: TFDQuery;
+    SelectQuery: TFDQuery;
     DeleteQuery: TFDQuery;
   private
     { Private declarations }

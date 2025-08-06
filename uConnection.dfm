@@ -23,7 +23,7 @@ object DmDatabase: TDmDatabase
     Left = 40
     Top = 88
   end
-  object SelectAlunos: TFDQuery
+  object SelectQuery: TFDQuery
     Connection = Conexao
     SQL.Strings = (
       'select * from alunos')

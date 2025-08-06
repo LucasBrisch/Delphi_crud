@@ -10,6 +10,8 @@ object frmDisciplinasCRUD: TfrmDisciplinasCRUD
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object ModalDisciplinas: TPanel
     Left = 0
@@ -103,6 +105,7 @@ object frmDisciplinasCRUD: TfrmDisciplinasCRUD
         Width = 273
         Height = 23
         Align = alTop
+        Enabled = False
         TabOrder = 0
         TextHint = 'C'#243'digo da disciplina'
       end
@@ -117,6 +120,7 @@ object frmDisciplinasCRUD: TfrmDisciplinasCRUD
       Align = alTop
       Caption = 'Enviar'
       TabOrder = 2
+      OnClick = EnviarDisciplinaClick
     end
     object CancelarDisciplina: TButton
       AlignWithMargins = True

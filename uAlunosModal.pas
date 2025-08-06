@@ -51,10 +51,15 @@ begin
     dmDatabase.InsertQuery.SQL.Text := 'INSERT INTO alunos (id, nome) VALUES ('+ inttostr(ID) + ', '+QuotedStr(AlunoNomeEdit.Text) +')';
     dmDatabase.InsertQuery.ExecSQL;
 
+    aluno_editado.Codigo := strtoint(alunocodedit.Text);
+    aluno_editado.Nome := (AlunoNomeEdit.Text);
+
     ShowMessage('Aluno inserido com sucesso!');
     ModalResult := mrOk;  // mrOK serve pra informar sucesso
     resetform;
   end else if edit then begin
+    aluno_editado.Codigo := strtoint(alunocodedit.Text);
+    aluno_editado.Nome := (AlunoNomeEdit.Text);
     dmDatabase.InsertQuery.SQL.Text := 'UPDATE alunos SET nome = ' + QuotedStr(AlunoNomeEdit.Text) + ' WHERE id = ' + alunocodedit.Text;
     dmDatabase.InsertQuery.ExecSQL;
 

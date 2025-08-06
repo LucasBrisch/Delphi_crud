@@ -101,6 +101,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Adicionar'
           TabOrder = 0
+          OnClick = Adicionar_ProfessoresClick
         end
         object Editar_professores: TButton
           AlignWithMargins = True
@@ -131,16 +132,23 @@ object CRUD_escolar: TCRUD_escolar
           TabOrder = 2
         end
       end
-      object Grid_professores: TStringGrid
+      object BoxProfessores: TListBox
         Left = 0
         Top = 65
         Width = 759
         Height = 422
         Align = alClient
-        ColCount = 3
-        DefaultColWidth = 260
-        DefaultColAlignment = taCenter
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -24
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ItemHeight = 32
+        ParentFont = False
         TabOrder = 1
+        ExplicitLeft = 216
+        ExplicitTop = 67
+        ExplicitWidth = 353
       end
     end
     object TabSheet2: TTabSheet
@@ -325,6 +333,7 @@ object CRUD_escolar: TCRUD_escolar
           Caption = 'Editar'
           TabOrder = 1
           OnClick = Editar_disciplinasClick
+          ExplicitTop = -1
         end
         object Excluir_disciplinas: TButton
           AlignWithMargins = True

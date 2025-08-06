@@ -35,10 +35,10 @@ type
     Adicionar_turmas: TButton;
     Editar_turmas: TButton;
     Excluir_turmas: TButton;
-    Grid_professores: TStringGrid;
     Grid_Matriculas: TStringGrid;
     AlunosBox: TListBox;
     DisciplinasBox: TListBox;
+    BoxProfessores: TListBox;
     procedure Adicionar_alunosClick(Sender: TObject);
     procedure filldisciplinas;
     procedure fillstudents;
@@ -51,6 +51,8 @@ type
     procedure Adicionar_disciplinasClick(Sender: TObject);
     procedure Excluir_disciplinasClick(Sender: TObject);
     procedure Editar_disciplinasClick(Sender: TObject);
+    procedure Adicionar_ProfessoresClick(Sender: TObject);
+
 
   private
     { Private declarations }
@@ -73,21 +75,32 @@ procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
 
 begin
   frmAlunosCRUD.Showmodal;
-  popularListaAlunos;
-  fillstudents;
+  // logica nova
+
+  alunoslista.Add(uAlunosmodal.frmAlunosCRUD.aluno_editado);
+  Alunosbox.AddItem(inttostr(uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo) + ' - ' + uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome, nil);
+
+  //logica nova
 end;
 
 procedure TCRUD_escolar.Adicionar_disciplinasClick(Sender: TObject);
 begin
   frmDisciplinasCRUD.Showmodal;
-  popularListaDisciplinas;
-  fillDisciplinas;
+  Disciplinaslista.Add(uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada);
+  Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' - ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, nil);
 end;
 
+
+procedure TCRUD_escolar.Adicionar_ProfessoresClick(Sender: TObject);
+begin
+frmAlunosCRUD.Showmodal;
+
+end;
 
 procedure TCRUD_escolar.Editar_alunosClick(Sender: TObject);
 var linhaselecionada, idString, nome : string;
 posicaoseparador : integer;
+aluno : taluno;
 begin
 uAlunosmodal.frmAlunosCRUD.edit := true;
 
@@ -97,11 +110,21 @@ if Alunosbox.ItemIndex = -1 then begin
   showmessage ('por favor escolha um aluno para ser editado');
   exit
 end;
-    linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
+
+//logica velha e burra
+    //linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
     // O 'Pos' encontra a posição do separador " - "
-    posicaoSeparador := Pos(' - ', linhaSelecionada);
+    //posicaoSeparador := Pos(' - ', linhaSelecionada);
     // O 'Copy' extrai o que está antes do separador
-    idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
+    //idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
+//logica velha e burra
+
+//logica nova (e se tudo der certo inteligente)
+
+aluno := Alunoslista[Alunosbox.ItemIndex];
+idstring := inttostr(aluno.Codigo);
+
+//logica nova (e se tudo der certo inteligente)
 
 
 dmDatabase.SelectQuery.Close;
@@ -120,6 +143,7 @@ end;
 procedure TCRUD_escolar.Editar_disciplinasClick(Sender: TObject);
 var linhaselecionada, idString, nome : string;
 posicaoseparador : integer;
+disciplina : tdisciplina;
 begin
 uDisciplinasmodal.frmDisciplinasCRUD.edit := true;
 
@@ -130,11 +154,12 @@ if Disciplinasbox.ItemIndex = -1 then begin
   exit
 end;
 
-    linhaSelecionada := Disciplinasbox.Items[Disciplinasbox.ItemIndex];
-    // O 'Pos' encontra a posição do separador " - "
-    posicaoSeparador := Pos(' - ', linhaSelecionada);
-    // O 'Copy' extrai o que está antes do separador
-    idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
+//logica nova (e se tudo der certo inteligente)
+
+disciplina := disciplinaslista[disciplinasbox.ItemIndex];
+idstring := inttostr(disciplina.Cod);
+
+//logica nova (e se tudo der certo inteligente)
 
 
 dmDatabase.SelectQuery.Close;
@@ -145,8 +170,22 @@ uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod := dmDatabase.Select
 uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
 
 frmdisciplinasCRUD.ShowModal;
-popularListaDisciplinas;
-fillDisciplinas;
+// logica nova
+
+
+  Disciplinasbox.Items.Delete(Disciplinasbox.ItemIndex);
+        for disciplina in Disciplinaslista do begin
+          if inttostr(disciplina.cod) = idstring then begin
+            disciplinaslista.Remove(disciplina);
+            exit
+          end;
+
+        end;
+
+  Disciplinaslista.Add(uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada);
+  Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' - ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, nil);
+
+//logica nova
 end;
 
 procedure TCRUD_escolar.Excluir_alunosClick(Sender: TObject);
@@ -155,22 +194,32 @@ var
   posicaoSeparador: Integer;
   idString: string;
   alunoID: Integer;
+  aluno : taluno;
 begin
   if Alunosbox.ItemIndex >= 0 then
   begin
-    linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
 
-    // O 'Pos' encontra a posição do separador " - "
-    posicaoSeparador := Pos(' - ', linhaSelecionada);
-    // O 'Copy' extrai o que está antes do separador
-    idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
+    aluno := Alunoslista[Alunosbox.ItemIndex];
+    idstring := inttostr(aluno.Codigo);
 
       try
         dmDatabase.InsertQuery.SQL.Text := 'UPDATE alunos SET ativo = false WHERE ID = ' + idString;
         dmDatabase.InsertQuery.ExecSQL;
         showmessage('excluido com sucesso');
-        popularListaAlunos;
-        fillstudents;
+
+
+        // logica nova
+
+        Alunosbox.Items.Delete(alunosbox.ItemIndex);
+        for aluno in alunoslista do begin
+          if inttostr(aluno.codigo) = idstring then begin
+            alunoslista.Remove(aluno);
+            exit
+          end;
+
+        end;
+
+        //logica nova
       except
         showmessage('erro')
       end;
@@ -184,22 +233,30 @@ var
   posicaoSeparador: Integer;
   idString: string;
   alunoID: Integer;
+  disciplina : tdisciplina;
 begin
   if Disciplinasbox.ItemIndex >= 0 then
   begin
-    linhaSelecionada := Disciplinasbox.Items[Disciplinasbox.ItemIndex];
+  disciplina := Disciplinaslista[Disciplinasbox.ItemIndex];
+  idstring := inttostr(disciplina.Cod);
 
-    // O 'Pos' encontra a posição do separador " - "
-    posicaoSeparador := Pos(' - ', linhaSelecionada);
-    // O 'Copy' extrai o que está antes do separador
-    idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
 
       try
         dmDatabase.InsertQuery.SQL.Text := 'UPDATE disciplinas SET ativo = false WHERE ID = ' + idString;
         dmDatabase.InsertQuery.ExecSQL;
         showmessage('excluido com sucesso');
-        popularListaDisciplinas;
-        fillDisciplinas;
+        // logica nova
+
+        Disciplinasbox.Items.Delete(Disciplinasbox.ItemIndex);
+        for disciplina in Disciplinaslista do begin
+          if inttostr(disciplina.cod) = idstring then begin
+            disciplinaslista.Remove(disciplina);
+            exit
+          end;
+
+        end;
+
+        //logica nova
       except
         showmessage('erro')
       end;

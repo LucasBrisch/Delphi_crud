@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, uconnection, system.Generics.Collections,
-  Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal, uTurmasModal, uMatriculasModal, ualuno, udisciplina;
+  Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal, uTurmasModal, uMatriculasModal,uprofessor, ualuno, udisciplina;
 
 type
   TCRUD_escolar = class(TForm)
@@ -42,16 +42,23 @@ type
     procedure Adicionar_alunosClick(Sender: TObject);
     procedure filldisciplinas;
     procedure fillstudents;
+    procedure fillProfessores;
     procedure FormShow(Sender: TObject);
     procedure Excluir_alunosClick(Sender: TObject);
     procedure popularListaAlunos;
     procedure popularListaDisciplinas;
+    procedure popularListaProfessores;
     procedure FormCreate(Sender: TObject);
     procedure Editar_alunosClick(Sender: TObject);
     procedure Adicionar_disciplinasClick(Sender: TObject);
     procedure Excluir_disciplinasClick(Sender: TObject);
     procedure Editar_disciplinasClick(Sender: TObject);
     procedure Adicionar_ProfessoresClick(Sender: TObject);
+    procedure Editar_professoresClick(Sender: TObject);
+
+
+    procedure ComecarAsBox;
+    procedure Excluir_professoresClick(Sender: TObject);
 
 
   private
@@ -60,6 +67,7 @@ type
 
   AlunosLista : Tobjectlist <taluno>;
   DisciplinasLista: tobjectlist <TDisciplina>;
+  ProfessoresLista: tobjectlist <TProfessor>;
 
   end;
 
@@ -74,7 +82,8 @@ implementation
 procedure TCRUD_escolar.Adicionar_alunosClick(Sender: TObject);
 
 begin
-  frmAlunosCRUD.Showmodal;
+  if frmAlunosCRUD.ShowModal <> mrOk then
+    Exit;
   // logica nova
 
   alunoslista.Add(uAlunosmodal.frmAlunosCRUD.aluno_editado);
@@ -85,7 +94,8 @@ end;
 
 procedure TCRUD_escolar.Adicionar_disciplinasClick(Sender: TObject);
 begin
-  frmDisciplinasCRUD.Showmodal;
+  if frmDisciplinasCRUD.ShowModal <> mrOk then
+    Exit;
   Disciplinaslista.Add(uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada);
   Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' - ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, nil);
 end;
@@ -93,9 +103,15 @@ end;
 
 procedure TCRUD_escolar.Adicionar_ProfessoresClick(Sender: TObject);
 begin
-frmAlunosCRUD.Showmodal;
+if frmProfessoresCRUD.ShowModal <> mrOk then
+    Exit;
+
+Professoreslista.Add(uprofessoresmodal.frmProfessoresCRUD.professor_editado);
+Professoresbox.AddItem(inttostr(uProfessoresmodal.frmProfessoresCRUD.Professor_editado.Codigo) + ' - ' + uprofessoresmodal.frmprofessoresCRUD.professor_editado.Nome + ' - ' + uprofessoresmodal.frmprofessoresCRUD.professor_editado.Cpf , nil);
 
 end;
+
+
 
 procedure TCRUD_escolar.Editar_alunosClick(Sender: TObject);
 var linhaselecionada, idString, nome : string;
@@ -111,15 +127,7 @@ if Alunosbox.ItemIndex = -1 then begin
   exit
 end;
 
-//logica velha e burra
-    //linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
-    // O 'Pos' encontra a posição do separador " - "
-    //posicaoSeparador := Pos(' - ', linhaSelecionada);
-    // O 'Copy' extrai o que está antes do separador
-    //idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
-//logica velha e burra
 
-//logica nova (e se tudo der certo inteligente)
 
 aluno := Alunoslista[Alunosbox.ItemIndex];
 idstring := inttostr(aluno.Codigo);
@@ -128,8 +136,7 @@ idstring := inttostr(aluno.Codigo);
 
 
 dmDatabase.SelectQuery.Close;
-dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome FROM alunos WHERE id = '+idstring;;
-uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome := '';
+dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome FROM alunos WHERE id = '+ idstring;
 dmDatabase.SelectQuery.Open;
 
 uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo := dmDatabase.SelectQuery.FieldByName('id').AsInteger;
@@ -167,13 +174,6 @@ if Disciplinasbox.ItemIndex = -1 then begin
   exit
 end;
 
-//logica velha e burra
-    //linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
-    // O 'Pos' encontra a posição do separador " - "
-    //posicaoSeparador := Pos(' - ', linhaSelecionada);
-    // O 'Copy' extrai o que está antes do separador
-    //idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
-//logica velha e burra
 
 //logica nova (e se tudo der certo inteligente)
 
@@ -208,6 +208,56 @@ for i := 0 to Disciplinaslista.Count - 1 do begin
 
 end;
 //final da logica
+
+end;
+
+procedure TCRUD_escolar.Editar_professoresClick(Sender: TObject);
+var linhaselecionada, idString, nome : string;
+posicaoseparador, i : integer;
+professor : tprofessor;
+begin
+uProfessoresmodal.frmprofessoresCRUD.edit := true;
+
+
+
+if Professoresbox.ItemIndex = -1 then begin
+  showmessage ('por favor escolha um professor para ser editado');
+  exit
+end;
+
+
+//logica nova (e se tudo der certo inteligente)
+
+professor := Professoreslista[professoresbox.ItemIndex];
+idstring := inttostr(professor.Codigo);
+
+//logica nova (e se tudo der certo inteligente)
+
+
+dmDatabase.SelectQuery.Close;
+dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome, cpf FROM professores WHERE id = '+idstring;;
+uprofessoresmodal.frmprofessoresCRUD.professor_editado.Nome := '';
+dmDatabase.SelectQuery.Open;
+
+uprofessoresmodal.frmprofessoresCRUD.professor_editado.Codigo := dmDatabase.SelectQuery.FieldByName('id').AsInteger;
+uprofessoresmodal.frmprofessoresCRUD.professor_editado.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
+uprofessoresmodal.frmprofessoresCRUD.professor_editado.cpf := dmDatabase.SelectQuery.FieldByName('cpf').AsString;
+
+frmProfessoresCRUD.ShowModal;
+
+for i := 0 to Professoreslista.Count - 1 do begin
+
+  if professoresLista[i].Codigo = uprofessoresmodal.frmprofessoresCRUD.professor_editado.codigo then begin
+
+    professoreslista[i].Nome := uprofessoresmodal.frmprofessoresCRUD.professor_editado.nome;
+
+    professoresbox.Items.Delete(professoresbox.ItemIndex);
+    professoresbox.items.Insert(i, inttostr(professoreslista[i].codigo) + ' - ' + professoreslista[i].Nome + ' - ' + professoresLista[i].CPF);
+
+    exit
+  end;
+
+end;
 
 end;
 
@@ -287,6 +337,44 @@ begin
   end;
 end;
 
+procedure TCRUD_escolar.Excluir_professoresClick(Sender: TObject);
+var
+  linhaSelecionada: string;
+  posicaoSeparador: Integer;
+  idString: string;
+  alunoID: Integer;
+  professor : tprofessor;
+begin
+
+  if Professoresbox.ItemIndex >= 0 then
+  begin
+  professor := professoreslista[professoresbox.ItemIndex];
+  idstring := inttostr(professor.Codigo);
+
+
+      try
+        dmDatabase.InsertQuery.SQL.Text := 'UPDATE professores SET ativo = false WHERE ID = ' + idString;
+        dmDatabase.InsertQuery.ExecSQL;
+        showmessage('excluido com sucesso');
+        // logica nova
+
+        Professoresbox.Items.Delete(professoresbox.ItemIndex);
+        for professor in professoreslista do begin
+          if inttostr(professor.codigo) = idstring then begin
+            professoreslista.Remove(professor);
+            exit
+          end;
+
+        end;
+
+        //logica nova
+      except
+        showmessage('erro')
+      end;
+
+  end;
+end;
+
 procedure TCRUD_escolar.filldisciplinas;
 var
   id, nome: string;
@@ -298,6 +386,21 @@ begin
   for I := 0 to DisciplinasLista.Count - 1 do begin
     Disciplina := DisciplinasLista[I];
     Disciplinasbox.AddItem(inttostr(Disciplina.Cod) + ' - ' + Disciplina.Nome, nil);
+  end;
+
+end;
+
+procedure TCRUD_escolar.fillProfessores;
+var
+  id, nome: string;
+  professor: tprofessor;
+  I: integer;
+begin
+  Professoresbox.Clear;
+
+  for I := 0 to ProfessoresLista.Count - 1 do begin
+    professor := ProfessoresLista[I];
+    professoresbox.AddItem(inttostr(Professor.Codigo) + ' - ' + professor.Nome + ' - ' + professor.CPF, nil);
   end;
 
 end;
@@ -319,18 +422,25 @@ end;
 
 procedure TCRUD_escolar.FormCreate(Sender: TObject);
 begin
+
   Alunoslista := TObjectList<TAluno>.Create(True);
   Disciplinaslista := TObjectList<TDisciplina>.Create(True);
+  Professoreslista := TObjectList<TProfessor>.Create(True);
 
   popularlistaAlunos;
   popularlistaDisciplinas;
+  popularListaProfessores;
 end;
 
 procedure TCRUD_escolar.FormShow(Sender: TObject);
 begin
-uAlunosmodal.frmAlunosCRUD.aluno_editado := taluno.Create();
+
+uAlunosmodal.frmAlunosCRUD.aluno_editado := taluno.create;
+uProfessoresmodal.frmProfessoresCRUD.professor_editado := tprofessor.create;
+
 fillstudents;
 fillDisciplinas;
+fillProfessores
 end;
 
 procedure TCRUD_escolar.popularListaAlunos;
@@ -377,6 +487,38 @@ Disciplina.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
 DisciplinasLista.Add(disciplina);
 dmDatabase.SelectQuery.Next;
 end;
+end;
+
+procedure TCRUD_escolar.popularListaProfessores;
+var
+professor : Tprofessor;
+begin
+  if not Assigned(dmDatabase) or not Assigned(dmDatabase.SelectQuery) then Exit;
+
+  ProfessoresLista.Clear;
+
+  dmDatabase.SelectQuery.Close;
+  dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome, cpf FROM Professores WHERE ativo = TRUE order by ID';
+  dmDatabase.SelectQuery.Open;
+
+while not dmDatabase.SelectQuery.Eof do
+begin
+professor := Tprofessor.Create();
+professor.Codigo := dmDatabase.SelectQuery.FieldByName('id').AsInteger;
+professor.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
+professor.cpf := dmDatabase.SelectQuery.FieldByName('cpf').AsString;
+
+ProfessoresLista.Add(professor);
+dmDatabase.SelectQuery.Next;
+end;
+end;
+
+
+procedure TCRUD_escolar.ComecarAsBox;
+begin
+professoresbox.AddItem('ID -    NOME    -   CPF   ', nil);
+alunosbox.AddItem('ID -    NOME', nil);
+Disciplinasbox.AddItem('ID -    NOME', nil);
 end;
 
 end.

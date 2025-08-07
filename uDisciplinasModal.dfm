@@ -130,6 +130,7 @@ object frmDisciplinasCRUD: TfrmDisciplinasCRUD
       Height = 25
       Align = alTop
       Caption = 'Cancelar'
+      ModalResult = 2
       TabOrder = 3
     end
   end

@@ -10,6 +10,8 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object ModalAlunos: TPanel
     Left = 0
@@ -46,7 +48,6 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
       Caption = 'ProfessorNomeHolder'
       ShowCaption = False
       TabOrder = 0
-      ExplicitTop = 152
       object ProfessorNameLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -84,7 +85,6 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
       Caption = 'Panel2'
       ShowCaption = False
       TabOrder = 1
-      ExplicitTop = 93
       object ProfessorCodLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -120,7 +120,7 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
       Align = alTop
       Caption = 'Enviar'
       TabOrder = 2
-      ExplicitTop = 261
+      OnClick = EnviarProfessorClick
     end
     object CancelarProfessor: TButton
       AlignWithMargins = True
@@ -130,8 +130,8 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
       Height = 25
       Align = alTop
       Caption = 'Cancelar'
+      ModalResult = 2
       TabOrder = 3
-      ExplicitTop = 292
     end
     object ProfessorCPFHolder: TPanel
       AlignWithMargins = True
@@ -144,7 +144,6 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
       Caption = 'ProfessorNomeHolder'
       ShowCaption = False
       TabOrder = 4
-      ExplicitTop = 152
       object ProfessorCPFLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -166,6 +165,7 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
         Width = 273
         Height = 23
         Align = alTop
+        MaxLength = 11
         TabOrder = 0
         TextHint = 'CPF do professor'
       end

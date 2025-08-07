@@ -18,7 +18,7 @@ object CRUD_escolar: TCRUD_escolar
     Top = 0
     Width = 767
     Height = 517
-    ActivePage = TabSheet5
+    ActivePage = Professores
     Align = alClient
     TabOrder = 0
     object TabSheet4: TTabSheet
@@ -116,6 +116,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Editar'
           TabOrder = 1
+          OnClick = Editar_professoresClick
         end
         object Excluir_professores: TButton
           AlignWithMargins = True
@@ -130,6 +131,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Excluir'
           TabOrder = 2
+          OnClick = Excluir_professoresClick
         end
       end
       object ProfessoresBox: TListBox

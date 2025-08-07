@@ -52,6 +52,10 @@ if DisciplinaNomeEdit.Text = '' then begin
     dmDatabase.InsertQuery.SQL.Text := 'INSERT INTO disciplinas (id, nome) VALUES ('+ inttostr(ID) + ', '+QuotedStr(DisciplinaNomeEdit.Text) +')';
     dmDatabase.InsertQuery.ExecSQL;
 
+    disciplina_editada.cod := strtoint(Disciplinacodedit.Text);
+    disciplina_editada.nome := disciplinanomeedit.text;
+
+
     ShowMessage('Disciplina inserida com sucesso!');
     ModalResult := mrOk;  // mrOK serve pra informar sucesso
     resetform;
@@ -60,6 +64,9 @@ if DisciplinaNomeEdit.Text = '' then begin
     dmDatabase.InsertQuery.ExecSQL;
 
     ShowMessage('disciplina editado com sucesso!');
+    //showmessage(disciplinanomeedit.Text);
+    disciplina_editada.Nome := disciplinanomeedit.Text;
+    disciplina_editada.cod := strtoint(disciplinacodedit.Text);
     ModalResult := mrOk;  // mrOK serve pra informar sucesso
     resetform;
     edit := false;

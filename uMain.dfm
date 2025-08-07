@@ -132,7 +132,7 @@ object CRUD_escolar: TCRUD_escolar
           TabOrder = 2
         end
       end
-      object BoxProfessores: TListBox
+      object ProfessoresBox: TListBox
         Left = 0
         Top = 65
         Width = 759
@@ -146,9 +146,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitLeft = 216
-        ExplicitTop = 67
-        ExplicitWidth = 353
       end
     end
     object TabSheet2: TTabSheet
@@ -333,7 +330,6 @@ object CRUD_escolar: TCRUD_escolar
           Caption = 'Editar'
           TabOrder = 1
           OnClick = Editar_disciplinasClick
-          ExplicitTop = -1
         end
         object Excluir_disciplinas: TButton
           AlignWithMargins = True
@@ -365,9 +361,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitLeft = 216
-        ExplicitTop = 67
-        ExplicitWidth = 353
       end
     end
   end

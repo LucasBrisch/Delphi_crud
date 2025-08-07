@@ -38,7 +38,7 @@ type
     Grid_Matriculas: TStringGrid;
     AlunosBox: TListBox;
     DisciplinasBox: TListBox;
-    BoxProfessores: TListBox;
+    ProfessoresBox: TListBox;
     procedure Adicionar_alunosClick(Sender: TObject);
     procedure filldisciplinas;
     procedure fillstudents;
@@ -99,7 +99,7 @@ end;
 
 procedure TCRUD_escolar.Editar_alunosClick(Sender: TObject);
 var linhaselecionada, idString, nome : string;
-posicaoseparador : integer;
+posicaoseparador, i : integer;
 aluno : taluno;
 begin
 uAlunosmodal.frmAlunosCRUD.edit := true;
@@ -136,13 +136,26 @@ uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo := dmDatabase.SelectQuery.FieldB
 uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
 
 frmAlunosCRUD.ShowModal;
-popularListaAlunos;
-fillstudents;
+
+for i := 0 to Alunoslista.Count - 1 do begin
+
+  if AlunosLista[i].Codigo = ualunosmodal.frmalunosCRUD.aluno_editado.codigo then begin
+
+    alunoslista[i].Nome := ualunosmodal.frmalunosCRUD.aluno_editado.nome;
+
+    alunosbox.Items.Delete(alunosbox.ItemIndex);
+    alunosbox.items.Insert(i, inttostr(alunoslista[i].codigo) + ' - ' + alunoslista[i].Nome);
+
+    exit
+  end;
+
+end;
+
 end;
 
 procedure TCRUD_escolar.Editar_disciplinasClick(Sender: TObject);
 var linhaselecionada, idString, nome : string;
-posicaoseparador : integer;
+posicaoseparador, i : integer;
 disciplina : tdisciplina;
 begin
 uDisciplinasmodal.frmDisciplinasCRUD.edit := true;
@@ -150,42 +163,52 @@ uDisciplinasmodal.frmDisciplinasCRUD.edit := true;
 
 
 if Disciplinasbox.ItemIndex = -1 then begin
-  showmessage ('por favor escolha uma disciplina para ser editada');
+  showmessage ('por favor escolha uma disciplina para ser editado');
   exit
 end;
 
+//logica velha e burra
+    //linhaSelecionada := Alunosbox.Items[Alunosbox.ItemIndex];
+    // O 'Pos' encontra a posição do separador " - "
+    //posicaoSeparador := Pos(' - ', linhaSelecionada);
+    // O 'Copy' extrai o que está antes do separador
+    //idString := Copy(linhaSelecionada, 1, posicaoSeparador - 1);
+//logica velha e burra
+
 //logica nova (e se tudo der certo inteligente)
 
-disciplina := disciplinaslista[disciplinasbox.ItemIndex];
+disciplina := disciplinaslista[Disciplinasbox.ItemIndex];
 idstring := inttostr(disciplina.Cod);
 
 //logica nova (e se tudo der certo inteligente)
 
 
 dmDatabase.SelectQuery.Close;
-dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome FROM disciplinas WHERE id = '+idstring;
+dmDatabase.SelectQuery.SQL.Text := 'SELECT id, nome FROM disciplinas WHERE id = '+idstring;;
+uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada.Nome := '';
 dmDatabase.SelectQuery.Open;
 
 uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod := dmDatabase.SelectQuery.FieldByName('id').AsInteger;
 uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
 
-frmdisciplinasCRUD.ShowModal;
-// logica nova
+frmDisciplinasCRUD.ShowModal;
 
 
-  Disciplinasbox.Items.Delete(Disciplinasbox.ItemIndex);
-        for disciplina in Disciplinaslista do begin
-          if inttostr(disciplina.cod) = idstring then begin
-            disciplinaslista.Remove(disciplina);
-            exit
-          end;
+// precisa fazer uma logica nova para atualizar a lista do front e do back
 
-        end;
+for i := 0 to Disciplinaslista.Count - 1 do begin
 
-  Disciplinaslista.Add(uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada);
-  Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' - ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, nil);
+  if DisciplinasLista[i].Cod = uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.cod then begin
+    disciplinaslista[i].Nome := udisciplinasmodal.frmdisciplinasCRUD.disciplina_editada.nome;
 
-//logica nova
+    disciplinasbox.Items.Delete(disciplinasbox.ItemIndex);
+    disciplinasbox.items.Insert(i, inttostr(disciplinaslista[i].cod) + ' - ' + disciplinaslista[i].Nome);
+    exit
+  end;
+
+end;
+//final da logica
+
 end;
 
 procedure TCRUD_escolar.Excluir_alunosClick(Sender: TObject);

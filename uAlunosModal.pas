@@ -63,6 +63,9 @@ begin
     dmDatabase.InsertQuery.SQL.Text := 'UPDATE alunos SET nome = ' + QuotedStr(AlunoNomeEdit.Text) + ' WHERE id = ' + alunocodedit.Text;
     dmDatabase.InsertQuery.ExecSQL;
 
+    aluno_editado.Nome := alunonomeedit.Text;
+    aluno_editado.codigo := strtoint(alunocodedit.Text);
+
     ShowMessage('Aluno editado com sucesso!');
     ModalResult := mrOk;  // mrOK serve pra informar sucesso
     resetform;

@@ -18,7 +18,7 @@ object CRUD_escolar: TCRUD_escolar
     Top = 0
     Width = 767
     Height = 517
-    ActivePage = Professores
+    ActivePage = TabSheet4
     Align = alClient
     TabOrder = 0
     object TabSheet4: TTabSheet
@@ -46,6 +46,8 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Adicionar'
           TabOrder = 0
+          OnClick = Adicionar_turmasClick
+          ExplicitTop = -1
         end
         object Editar_turmas: TButton
           AlignWithMargins = True
@@ -60,6 +62,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Editar'
           TabOrder = 1
+          OnClick = Editar_turmasClick
         end
         object Excluir_turmas: TButton
           AlignWithMargins = True
@@ -74,7 +77,23 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Excluir'
           TabOrder = 2
+          OnClick = Excluir_turmasClick
         end
+      end
+      object TurmasBox: TListBox
+        Left = 0
+        Top = 65
+        Width = 759
+        Height = 422
+        Align = alClient
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -24
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ItemHeight = 32
+        ParentFont = False
+        TabOrder = 1
       end
     end
     object Professores: TTabSheet
@@ -249,6 +268,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Adicionar'
           TabOrder = 0
+          OnClick = Adicionar_matriculasClick
         end
         object Editar_matriculas: TButton
           AlignWithMargins = True
@@ -279,15 +299,19 @@ object CRUD_escolar: TCRUD_escolar
           TabOrder = 2
         end
       end
-      object Grid_Matriculas: TStringGrid
+      object MatriculasBox: TListBox
         Left = 0
         Top = 65
         Width = 759
         Height = 422
         Align = alClient
-        ColCount = 3
-        DefaultColWidth = 260
-        DefaultColAlignment = taCenter
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -24
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ItemHeight = 32
+        ParentFont = False
         TabOrder = 1
       end
     end

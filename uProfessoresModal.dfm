@@ -106,6 +106,7 @@ object frmProfessoresCRUD: TfrmProfessoresCRUD
         Width = 273
         Height = 23
         Align = alTop
+        Enabled = False
         TabOrder = 0
         TextHint = 'C'#243'digo do Professor'
       end

@@ -10,6 +10,7 @@ object frmTurmasCRUD: TfrmTurmasCRUD
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object ModalTurmas: TPanel
     Left = 0
@@ -46,7 +47,6 @@ object frmTurmasCRUD: TfrmTurmasCRUD
       Caption = 'TurmaNomeDoProfessorHolder'
       ShowCaption = False
       TabOrder = 0
-      ExplicitTop = 152
       object TurmaNomeDoProfessorLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -58,18 +58,19 @@ object frmTurmasCRUD: TfrmTurmasCRUD
         Margins.Right = 0
         Margins.Bottom = 0
         Align = alTop
-        Caption = 'Nome:'
-        ExplicitWidth = 36
+        Caption = 'Nome do professor:'
+        ExplicitWidth = 105
       end
-      object TurmaNomeDoProfessorEdit: TEdit
+      object ComboBoxProfessores: TComboBox
         AlignWithMargins = True
         Left = 4
         Top = 19
         Width = 273
         Height = 23
-        Align = alTop
+        Align = alClient
         TabOrder = 0
-        TextHint = 'Nome do Professor'
+        Text = 'ComboBoxProfessores'
+        ExplicitTop = 33
       end
     end
     object TurmaCodHolder: TPanel
@@ -83,8 +84,6 @@ object frmTurmasCRUD: TfrmTurmasCRUD
       Caption = 'Panel2'
       ShowCaption = False
       TabOrder = 1
-      ExplicitLeft = 3
-      ExplicitTop = 94
       object TurmaCodLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -106,6 +105,7 @@ object frmTurmasCRUD: TfrmTurmasCRUD
         Width = 273
         Height = 23
         Align = alTop
+        Enabled = False
         TabOrder = 0
         TextHint = 'C'#243'digo da turma'
       end
@@ -120,7 +120,7 @@ object frmTurmasCRUD: TfrmTurmasCRUD
       Align = alTop
       Caption = 'Enviar'
       TabOrder = 2
-      ExplicitTop = 261
+      OnClick = EnviarTurmaClick
     end
     object CancelarTurma: TButton
       AlignWithMargins = True
@@ -130,8 +130,8 @@ object frmTurmasCRUD: TfrmTurmasCRUD
       Height = 25
       Align = alTop
       Caption = 'Cancelar'
+      ModalResult = 2
       TabOrder = 3
-      ExplicitTop = 292
     end
     object TurmaNomeDaMateriaHolder: TPanel
       AlignWithMargins = True
@@ -144,7 +144,6 @@ object frmTurmasCRUD: TfrmTurmasCRUD
       Caption = 'TurmaNomeDoProfessorHolder'
       ShowCaption = False
       TabOrder = 4
-      ExplicitTop = 152
       object TurmaNomeDaMateriaLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -159,15 +158,16 @@ object frmTurmasCRUD: TfrmTurmasCRUD
         Caption = 'Nome da mat'#233'ria:'
         ExplicitWidth = 95
       end
-      object TurmaNomeDaMateriaEdit: TEdit
+      object ComboBoxDisciplinas: TComboBox
         AlignWithMargins = True
         Left = 4
         Top = 19
         Width = 273
         Height = 23
-        Align = alTop
+        Align = alClient
         TabOrder = 0
-        TextHint = 'Nome da mat'#233'ria'
+        Text = 'ComboBoxDisciplinas'
+        ExplicitTop = 33
       end
     end
   end

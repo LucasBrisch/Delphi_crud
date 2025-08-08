@@ -46,7 +46,6 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
       Caption = 'MatriculaNomeAlunoHolder'
       ShowCaption = False
       TabOrder = 0
-      ExplicitTop = 152
       object MatriculaAlunoNomeLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -61,15 +60,18 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Caption = 'Nome do aluno:'
         ExplicitWidth = 86
       end
-      object MatriculaAlunoNomeEdit: TEdit
+      object ComboBoxAlunos: TComboBox
         AlignWithMargins = True
         Left = 4
         Top = 19
         Width = 273
         Height = 23
-        Align = alTop
+        Align = alClient
         TabOrder = 0
-        TextHint = 'Nome do aluno'
+        Text = 'ComboBoxAlunos'
+        ExplicitLeft = 72
+        ExplicitTop = 16
+        ExplicitWidth = 145
       end
     end
     object MatriculaCodHolder: TPanel
@@ -83,7 +85,6 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
       Caption = 'Panel2'
       ShowCaption = False
       TabOrder = 1
-      ExplicitTop = 93
       object MatriculaCodLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -106,7 +107,7 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Height = 23
         Align = alTop
         TabOrder = 0
-        TextHint = 'C'#243'digo do aluno'
+        TextHint = 'C'#243'digo da matricula'
       end
     end
     object EnviarMatricula: TButton
@@ -119,7 +120,6 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
       Align = alTop
       Caption = 'Enviar'
       TabOrder = 2
-      ExplicitTop = 261
     end
     object CancelarMatricula: TButton
       AlignWithMargins = True
@@ -129,8 +129,8 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
       Height = 25
       Align = alTop
       Caption = 'Cancelar'
+      ModalResult = 2
       TabOrder = 3
-      ExplicitTop = 292
     end
     object MatriculaCodTurmaHolder: TPanel
       AlignWithMargins = True
@@ -143,7 +143,6 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
       Caption = 'MatriculaNomeAlunoHolder'
       ShowCaption = False
       TabOrder = 4
-      ExplicitTop = 152
       object MatriculaCodTurmaLabel: TLabel
         AlignWithMargins = True
         Left = 9
@@ -158,15 +157,16 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Caption = 'Numero da turma:'
         ExplicitWidth = 98
       end
-      object MatriculaCodTurmaEdit: TEdit
+      object ComboBoxTurmas: TComboBox
         AlignWithMargins = True
         Left = 4
         Top = 19
         Width = 273
         Height = 23
-        Align = alTop
+        Align = alClient
         TabOrder = 0
-        TextHint = 'Numero da turma:'
+        Text = 'ComboBoxAlunos'
+        ExplicitTop = 33
       end
     end
   end

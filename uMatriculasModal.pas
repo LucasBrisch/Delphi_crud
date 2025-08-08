@@ -12,7 +12,6 @@ type
     MatriculasAlunosTitle: TLabel;
     MatriculaNomeAlunoHolder: TPanel;
     MatriculaAlunoNomeLabel: TLabel;
-    MatriculaAlunoNomeEdit: TEdit;
     MatriculaCodHolder: TPanel;
     MatriculaCodLabel: TLabel;
     MatriculaCodEdit: TEdit;
@@ -20,7 +19,8 @@ type
     CancelarMatricula: TButton;
     MatriculaCodTurmaHolder: TPanel;
     MatriculaCodTurmaLabel: TLabel;
-    MatriculaCodTurmaEdit: TEdit;
+    ComboBoxAlunos: TComboBox;
+    ComboBoxTurmas: TComboBox;
   private
     { Private declarations }
   public

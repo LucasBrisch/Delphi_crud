@@ -128,7 +128,7 @@ object frmAlunosCRUD: TfrmAlunosCRUD
       Width = 281
       Height = 25
       Align = alTop
-      Caption = 'Cancelar'
+      Caption = 'cancelar'
       ModalResult = 2
       TabOrder = 3
     end

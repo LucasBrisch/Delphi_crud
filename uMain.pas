@@ -230,9 +230,10 @@ dmDatabase.SelectQuery.Open;
 uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo := dmDatabase.SelectQuery.FieldByName('id').AsInteger;
 uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
 
-if frmAlunosCRUD.ShowModal <> mrOk then
+if frmAlunosCRUD.ShowModal <> mrOk then begin
     uAlunosmodal.frmAlunosCRUD.edit := false;
     Exit;
+end;
 
 for i := 0 to Alunoslista.Count - 1 do begin
 
@@ -281,9 +282,10 @@ dmDatabase.SelectQuery.Open;
 uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod := dmDatabase.SelectQuery.FieldByName('id').AsInteger;
 uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
 
-if frmDisciplinasCRUD.ShowModal <> mrOk then
+if frmDisciplinasCRUD.ShowModal <> mrOk then begin
     uDisciplinasmodal.frmDisciplinasCRUD.edit := false;
-    Exit;;
+    Exit;
+end;
 
 
 // precisa fazer uma logica nova para atualizar a lista do front e do back
@@ -305,15 +307,12 @@ end;
 
 procedure TCRUD_escolar.Editar_matriculasClick(Sender: TObject);
 var
-
   aluno: TAluno;
   turma: TTurma;
   textoMatricula: string;
   matriculaParaEditar: TMatricula;
   indiceSelecionado: Integer;
 begin
-
-
   if matriculasbox.ItemIndex = -1 then
   begin
     ShowMessage('Por favor, escolha uma matrícula para editar.');
@@ -330,29 +329,38 @@ begin
 
   preenchercombobox_matriculas;
 
-
   if umatriculasmodal.frmMatriculasCRUD.ShowModal <> mrOk then
+  begin
     umatriculasmodal.frmmatriculasCRUD.edit := false;
     Exit;
+  end;
 
-
-
-
+  // Atualiza o objeto na lista de dados
   matriculaslista[indiceSelecionado].codaluno := umatriculasmodal.frmmatriculasCRUD.matricula_editada.codaluno;
   matriculaslista[indiceSelecionado].codturma := umatriculasmodal.frmmatriculasCRUD.matricula_editada.codTurma;
 
+  // Busca os dados para montar a string
   aluno := BuscarAlunoPorID(matriculaslista[indiceSelecionado].codaluno);
   turma := BuscarTurmaPorID(matriculaslista[indiceSelecionado].codturma);
-
 
   textoMatricula := IntToStr(matriculaslista[indiceSelecionado].Cod) + ' - ' + aluno.nome + ' - ' + IntToStr(turma.Cod);
 
 
-  matriculasbox.Items.Delete(indiceSelecionado);
-  matriculasbox.Items.InsertObject(indiceSelecionado, textoMatricula, matriculaslista[indiceSelecionado]);
+  matriculasbox.Items.BeginUpdate;
+  try
+
+    matriculasbox.Items[indiceSelecionado] := textoMatricula;
+
+
+    matriculasbox.Items.Objects[indiceSelecionado] := matriculaslista[indiceSelecionado];
+  finally
+    matriculasbox.Items.EndUpdate;
+  end;
+
+
+  matriculasbox.ItemIndex := indiceSelecionado;
 
 end;
-
 procedure TCRUD_escolar.Editar_professoresClick(Sender: TObject);
 var linhaselecionada, idString, nome : string;
 posicaoseparador, i : integer;
@@ -385,9 +393,10 @@ uprofessoresmodal.frmprofessoresCRUD.professor_editado.Codigo := dmDatabase.Sele
 uprofessoresmodal.frmprofessoresCRUD.professor_editado.Nome := dmDatabase.SelectQuery.FieldByName('nome').AsString;
 uprofessoresmodal.frmprofessoresCRUD.professor_editado.cpf := dmDatabase.SelectQuery.FieldByName('cpf').AsString;
 
-if frmprofessoresCRUD.ShowModal <> mrOk then
+if frmprofessoresCRUD.ShowModal <> mrOk then begin
     uprofessoresmodal.frmprofessoresCRUD.edit := false;
     Exit;
+end;
 
 for i := 0 to Professoreslista.Count - 1 do begin
 
@@ -439,9 +448,10 @@ uturmasmodal.frmturmasCRUD.turma_editada.Cod := dmDatabase.SelectQuery.FieldByNa
 uturmasmodal.frmturmasCRUD.turma_editada.codProfessor := dmDatabase.SelectQuery.FieldByName('fk_id_professor').AsInteger;
 uturmasmodal.frmturmasCRUD.turma_editada.CodDisciplina := dmDatabase.SelectQuery.FieldByName('fk_id_disciplina').AsInteger;
 
-if frmTurmasCRUD.ShowModal <> mrOk then
+if frmTurmasCRUD.ShowModal <> mrOk then begin
     uTurmasmodal.frmTurmasCRUD.edit := false;
     Exit;
+end;
 
 for i := 0 to turmaslista.Count - 1 do begin
 
@@ -855,6 +865,8 @@ fillProfessores;
 fillturmas;
 fillmatriculas;
 end;
+
+
 
 procedure TCRUD_escolar.popularListaAlunos;
 var

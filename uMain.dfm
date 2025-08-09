@@ -18,7 +18,7 @@ object CRUD_escolar: TCRUD_escolar
     Top = 0
     Width = 767
     Height = 517
-    ActivePage = TabSheet5
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object TabSheet4: TTabSheet

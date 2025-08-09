@@ -104,15 +104,49 @@ end;
 end;
 
 procedure TfrmTurmasCRUD.FormShow(Sender: TObject);
+var
+  i: Integer;
+  professor: TProfessor;
+  disciplina: TDisciplina;
 begin
-if edit then begin
+  if edit then
+  begin
 
-Turmacodedit.text := inttostr(turma_editada.Cod);
+
+    TurmaCodEdit.text := IntToStr(turma_editada.Cod);
 
 
-end else if not edit then begin
-  Resetform;
-end;
+    for i := 0 to ComboBoxProfessores.Items.Count - 1 do
+    begin
+
+      professor := TProfessor(ComboBoxProfessores.Items.Objects[i]);
+
+      if professor.Codigo = turma_editada.CodProfessor then
+      begin
+        ComboBoxProfessores.ItemIndex := i;
+        break;
+      end;
+    end;
+
+
+    for i := 0 to ComboBoxDisciplinas.Items.Count - 1 do
+    begin
+
+      disciplina := TDisciplina(ComboBoxDisciplinas.Items.Objects[i]);
+
+      if disciplina.Cod = turma_editada.CodDisciplina then
+      begin
+        ComboBoxDisciplinas.ItemIndex := i;
+        break;
+      end;
+    end;
+
+  end
+  else
+  begin
+
+    Resetform;
+  end;
 end;
 
 procedure TfrmTurmasCRUD.resetform;

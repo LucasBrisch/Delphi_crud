@@ -18,7 +18,7 @@ object CRUD_escolar: TCRUD_escolar
     Top = 0
     Width = 767
     Height = 517
-    ActivePage = TabSheet4
+    ActivePage = TabSheet5
     Align = alClient
     TabOrder = 0
     object TabSheet4: TTabSheet
@@ -47,7 +47,6 @@ object CRUD_escolar: TCRUD_escolar
           Caption = 'Adicionar'
           TabOrder = 0
           OnClick = Adicionar_turmasClick
-          ExplicitTop = -1
         end
         object Editar_turmas: TButton
           AlignWithMargins = True
@@ -283,6 +282,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Editar'
           TabOrder = 1
+          OnClick = Editar_matriculasClick
         end
         object Excluir_matriculas: TButton
           AlignWithMargins = True
@@ -297,6 +297,7 @@ object CRUD_escolar: TCRUD_escolar
           Align = alLeft
           Caption = 'Excluir'
           TabOrder = 2
+          OnClick = Excluir_matriculasClick
         end
       end
       object MatriculasBox: TListBox

@@ -70,7 +70,6 @@ object frmTurmasCRUD: TfrmTurmasCRUD
         Align = alClient
         TabOrder = 0
         Text = 'ComboBoxProfessores'
-        ExplicitTop = 33
       end
     end
     object TurmaCodHolder: TPanel
@@ -167,7 +166,6 @@ object frmTurmasCRUD: TfrmTurmasCRUD
         Align = alClient
         TabOrder = 0
         Text = 'ComboBoxDisciplinas'
-        ExplicitTop = 33
       end
     end
   end

@@ -10,6 +10,7 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object ModalAlunos: TPanel
     Left = 0
@@ -69,9 +70,6 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Align = alClient
         TabOrder = 0
         Text = 'ComboBoxAlunos'
-        ExplicitLeft = 72
-        ExplicitTop = 16
-        ExplicitWidth = 145
       end
     end
     object MatriculaCodHolder: TPanel
@@ -106,6 +104,7 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Width = 273
         Height = 23
         Align = alTop
+        Enabled = False
         TabOrder = 0
         TextHint = 'C'#243'digo da matricula'
       end
@@ -120,6 +119,7 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
       Align = alTop
       Caption = 'Enviar'
       TabOrder = 2
+      OnClick = EnviarMatriculaClick
     end
     object CancelarMatricula: TButton
       AlignWithMargins = True
@@ -166,7 +166,6 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Align = alClient
         TabOrder = 0
         Text = 'ComboBoxAlunos'
-        ExplicitTop = 33
       end
     end
   end

@@ -7,14 +7,13 @@ object DmDatabase: TDmDatabase
       'User_Name=postgres'
       'Password=root'
       'DriverID=PG')
-    Connected = True
     Left = 232
     Top = 16
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink
     VendorLib = 
-      'C:\Users\Lucas Zanlorenzi\Documents\GitHub\Delphi_crud\Delphi_cr' +
-      'ud\lib\libpq.dll'
+      'C:\Users\lucas\OneDrive\Documentos\GitHub\delphi_crudpfvfunciona' +
+      '\Delphi_crud\lib\libpq.dll'
     Left = 120
     Top = 8
   end

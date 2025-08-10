@@ -40,6 +40,10 @@ type
     ProfessoresBox: TListBox;
     MatriculasBox: TListBox;
     TurmasBox: TListBox;
+    Panel1: TPanel;
+    ID: TLabel;
+    NOME: TLabel;
+    Panel3: TPanel;
     procedure Adicionar_alunosClick(Sender: TObject);
     procedure filldisciplinas;
     procedure fillstudents;
@@ -153,7 +157,7 @@ begin
   disciplina := BuscarDisciplinaPorID(turma.CodDisciplina);
 
 
-  textoMatricula :=IntToStr(matricula.Cod) + ' - '  + aluno.nome + ' - ' + inttostr(turma.cod)  ;
+  textoMatricula :=IntToStr(matricula.Cod) + ' -       '  + aluno.nome + ' - ' + inttostr(turma.cod)  ;
 
 
   MatriculasBox.AddItem(textoMatricula, matricula);
@@ -343,7 +347,7 @@ begin
   aluno := BuscarAlunoPorID(matriculaslista[indiceSelecionado].codaluno);
   turma := BuscarTurmaPorID(matriculaslista[indiceSelecionado].codturma);
 
-  textoMatricula := IntToStr(matriculaslista[indiceSelecionado].Cod) + ' - ' + aluno.nome + ' - ' + IntToStr(turma.Cod);
+  textoMatricula := IntToStr(matriculaslista[indiceSelecionado].Cod) + ' -       ' + aluno.nome + ' - ' + IntToStr(turma.Cod);
 
 
   matriculasbox.Items.BeginUpdate;
@@ -711,7 +715,7 @@ begin
   disciplina := BuscarDisciplinaPorID(turma.CodDisciplina);
 
 
-  textoMatricula :=IntToStr(matricula.Cod) + ' - '  + aluno.nome + ' - ' + inttostr(turma.cod)  ;
+  textoMatricula :=IntToStr(matricula.Cod) + ' -       '  + aluno.nome + ' - ' + inttostr(turma.cod)  ;
 
 
     MatriculasBox.AddItem(textoMatricula, matricula);

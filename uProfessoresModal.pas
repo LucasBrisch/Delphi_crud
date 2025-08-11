@@ -44,12 +44,20 @@ implementation
 
 
 procedure TfrmProfessoresCRUD.EnviarProfessorClick(Sender: TObject);
+var i : double;
 begin
 begin
 
   if (professorNomeEdit.Text = '') or not(Length(professorcpfedit.text) = 11) then begin
   ShowMessage('Por favor, preencha o nome e um CPF válido com 11 dígitos.');
   Exit;
+  end;
+
+  try
+   i := strtofloat(professorcpfEdit.Text);
+  except
+    ShowMessage('Por favor, use apenas numeros para o CPF');
+    exit
   end;
 
   try

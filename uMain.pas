@@ -44,6 +44,22 @@ type
     ID: TLabel;
     NOME: TLabel;
     Panel3: TPanel;
+    Panel2: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Panel10: TPanel;
     procedure Adicionar_alunosClick(Sender: TObject);
     procedure filldisciplinas;
     procedure fillstudents;
@@ -65,6 +81,7 @@ type
     procedure Adicionar_ProfessoresClick(Sender: TObject);
     procedure Editar_professoresClick(Sender: TObject);
 
+    function confirmarexclusao : boolean;
 
     function BuscarProfessorPorID(id: Integer): TProfessor;
     function BuscarDisciplinaPorID(id: Integer): TDisciplina;
@@ -73,7 +90,6 @@ type
     procedure preenchercombobox_turmas;
     procedure preenchercombobox_matriculas;
 
-    procedure ComecarAsBox;
     procedure Excluir_professoresClick(Sender: TObject);
     procedure Adicionar_matriculasClick(Sender: TObject);
     procedure Adicionar_turmasClick(Sender: TObject);
@@ -81,6 +97,7 @@ type
     procedure Editar_turmasClick(Sender: TObject);
     procedure Editar_matriculasClick(Sender: TObject);
     procedure Excluir_matriculasClick(Sender: TObject);
+    procedure PageControl1Change(Sender: TObject);
 
 
   private
@@ -111,7 +128,7 @@ begin
   // logica nova
 
   alunoslista.Add(uAlunosmodal.frmAlunosCRUD.aluno_editado);
-  Alunosbox.AddItem(inttostr(uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo) + ' - ' + uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome, nil);
+  Alunosbox.AddItem(inttostr(uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo) + ' -       ' + uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome, nil);
 
   //logica nova
 end;
@@ -121,7 +138,7 @@ begin
   if frmDisciplinasCRUD.ShowModal <> mrOk then
     Exit;
   Disciplinaslista.Add(uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada);
-  Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' - ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, nil);
+  Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' -       ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, nil);
 end;
 
 
@@ -157,7 +174,7 @@ begin
   disciplina := BuscarDisciplinaPorID(turma.CodDisciplina);
 
 
-  textoMatricula :=IntToStr(matricula.Cod) + ' -       '  + aluno.nome + ' - ' + inttostr(turma.cod)  ;
+  textoMatricula :=IntToStr(matricula.Cod) + ' -       '  + aluno.nome + ' / ' + inttostr(turma.cod)  ;
 
 
   MatriculasBox.AddItem(textoMatricula, matricula);
@@ -170,7 +187,7 @@ if frmProfessoresCRUD.ShowModal <> mrOk then
     Exit;
 
 Professoreslista.Add(uprofessoresmodal.frmProfessoresCRUD.professor_editado);
-Professoresbox.AddItem(inttostr(uProfessoresmodal.frmProfessoresCRUD.Professor_editado.Codigo) + ' - ' + uprofessoresmodal.frmprofessoresCRUD.professor_editado.Nome + ' - ' + uprofessoresmodal.frmprofessoresCRUD.professor_editado.Cpf , nil);
+Professoresbox.AddItem(inttostr(uProfessoresmodal.frmProfessoresCRUD.Professor_editado.Codigo) + ' -       ' + uprofessoresmodal.frmprofessoresCRUD.professor_editado.Nome + ' / ' + uprofessoresmodal.frmprofessoresCRUD.professor_editado.Cpf , nil);
 
 end;
 
@@ -196,7 +213,7 @@ if frmTurmasCRUD.ShowModal <> mrOk then
     disciplina := BuscarDisciplinaPorID(uturmasmodal.frmTurmasCRUD.turma_editada.CodDisciplina);
     turma := uturmasmodal.frmTurmasCRUD.turma_editada;
 
-    textoTurma := IntToStr(turma.cod) + ' - ' + professor.nome + ' / ' + disciplina.nome;
+    textoTurma := IntToStr(turma.cod) + ' -       ' + professor.nome + ' / ' + disciplina.nome;
 
 
     TurmasBox.AddItem(textoTurma, turma);
@@ -246,7 +263,7 @@ for i := 0 to Alunoslista.Count - 1 do begin
     alunoslista[i].Nome := ualunosmodal.frmalunosCRUD.aluno_editado.nome;
 
     alunosbox.Items.Delete(alunosbox.ItemIndex);
-    alunosbox.items.Insert(i, inttostr(alunoslista[i].codigo) + ' - ' + alunoslista[i].Nome);
+    alunosbox.items.Insert(i, inttostr(alunoslista[i].codigo) + ' -       ' + alunoslista[i].Nome);
 
     exit
   end;
@@ -300,7 +317,7 @@ for i := 0 to Disciplinaslista.Count - 1 do begin
     disciplinaslista[i].Nome := udisciplinasmodal.frmdisciplinasCRUD.disciplina_editada.nome;
 
     disciplinasbox.Items.Delete(disciplinasbox.ItemIndex);
-    disciplinasbox.items.Insert(i, inttostr(disciplinaslista[i].cod) + ' - ' + disciplinaslista[i].Nome);
+    disciplinasbox.items.Insert(i, inttostr(disciplinaslista[i].cod) + ' -       ' + disciplinaslista[i].Nome);
     exit
   end;
 
@@ -347,7 +364,7 @@ begin
   aluno := BuscarAlunoPorID(matriculaslista[indiceSelecionado].codaluno);
   turma := BuscarTurmaPorID(matriculaslista[indiceSelecionado].codturma);
 
-  textoMatricula := IntToStr(matriculaslista[indiceSelecionado].Cod) + ' -       ' + aluno.nome + ' - ' + IntToStr(turma.Cod);
+  textoMatricula := IntToStr(matriculaslista[indiceSelecionado].Cod) + ' -       ' + aluno.nome + ' / ' + IntToStr(turma.Cod);
 
 
   matriculasbox.Items.BeginUpdate;
@@ -470,7 +487,7 @@ for i := 0 to turmaslista.Count - 1 do begin
     disciplina := BuscarDisciplinaPorID(turma.CodDisciplina);
 
 
-    turmasbox.items.Insert(i, IntToStr(turma.cod) + ' - ' + professor.nome + ' / ' + disciplina.nome);
+    turmasbox.items.Insert(i, IntToStr(turma.cod) + ' -       ' + professor.nome + ' / ' + disciplina.nome);
 
     exit
   end;
@@ -489,9 +506,10 @@ var
 begin
   if Alunosbox.ItemIndex >= 0 then
   begin
+    if confirmarexclusao then begin
 
-    aluno := Alunoslista[Alunosbox.ItemIndex];
-    idstring := inttostr(aluno.Codigo);
+      aluno := Alunoslista[Alunosbox.ItemIndex];
+      idstring := inttostr(aluno.Codigo);
 
       try
         dmDatabase.InsertQuery.SQL.Text := 'UPDATE alunos SET ativo = false WHERE ID = ' + idString;
@@ -514,7 +532,10 @@ begin
       except
         showmessage('erro')
       end;
+    end;
 
+  end else begin
+    showmessage ('Escolha um aluno para ser excluido')
   end;
 end;
 
@@ -528,8 +549,9 @@ var
 begin
   if Disciplinasbox.ItemIndex >= 0 then
   begin
-  disciplina := Disciplinaslista[Disciplinasbox.ItemIndex];
-  idstring := inttostr(disciplina.Cod);
+    if confirmarexclusao then begin
+      disciplina := Disciplinaslista[Disciplinasbox.ItemIndex];
+      idstring := inttostr(disciplina.Cod);
 
 
       try
@@ -551,7 +573,10 @@ begin
       except
         showmessage('erro')
       end;
+    end;
 
+  end else begin
+    showmessage ('Escolha uma disciplina para excluir')
   end;
 end;
 
@@ -564,10 +589,11 @@ var
   matricula : tmatricula;
 begin
 
- // if Professoresbox.ItemIndex >= 0 then
+  if matriculasbox.ItemIndex >= 0 then
   begin
-  matricula := matriculaslista[matriculasbox.ItemIndex];
-  idstring := inttostr(matricula.Cod);
+    if confirmarexclusao then begin
+      matricula := matriculaslista[matriculasbox.ItemIndex];
+      idstring := inttostr(matricula.Cod);
 
 
       try
@@ -589,7 +615,10 @@ begin
       except
         showmessage('erro')
       end;
+    end;
 
+  end else begin
+    showmessage ('Escolha uma matricula para excluir')
   end;
 end;
 
@@ -604,8 +633,9 @@ begin
 
   if Professoresbox.ItemIndex >= 0 then
   begin
-  professor := professoreslista[professoresbox.ItemIndex];
-  idstring := inttostr(professor.Codigo);
+  if confirmarexclusao then begin
+    professor := professoreslista[professoresbox.ItemIndex];
+    idstring := inttostr(professor.Codigo);
 
 
       try
@@ -627,7 +657,10 @@ begin
       except
         showmessage('erro')
       end;
+  end;
 
+  end else begin
+    showmessage ('escolha um professor para excluir')
   end;
 end;
 
@@ -640,10 +673,12 @@ var
   turma : tturma;
 begin
 
- // if Professoresbox.ItemIndex >= 0 then
+  if Turmasbox.ItemIndex >= 0 then
   begin
-  turma := turmaslista[turmasbox.ItemIndex];
-  idstring := inttostr(turma.Cod);
+    if confirmarexclusao then begin
+
+      turma := turmaslista[turmasbox.ItemIndex];
+      idstring := inttostr(turma.Cod);
 
 
       try
@@ -665,7 +700,10 @@ begin
       except
         showmessage('erro')
       end;
+    end;
 
+  end else begin
+    showmessage ('escolha alguma turma para ser excluida')
   end;
 end;
 
@@ -679,7 +717,7 @@ begin
 
   for I := 0 to DisciplinasLista.Count - 1 do begin
     Disciplina := DisciplinasLista[I];
-    Disciplinasbox.AddItem(inttostr(Disciplina.Cod) + ' - ' + Disciplina.Nome, disciplina);
+    Disciplinasbox.AddItem(inttostr(Disciplina.Cod) + ' -       ' + Disciplina.Nome, disciplina);
   end;
 
 end;
@@ -715,7 +753,7 @@ begin
   disciplina := BuscarDisciplinaPorID(turma.CodDisciplina);
 
 
-  textoMatricula :=IntToStr(matricula.Cod) + ' -       '  + aluno.nome + ' - ' + inttostr(turma.cod)  ;
+  textoMatricula :=IntToStr(matricula.Cod) + ' -       '  + aluno.nome + ' / ' + inttostr(turma.cod)  ;
 
 
     MatriculasBox.AddItem(textoMatricula, matricula);
@@ -732,7 +770,7 @@ begin
 
   for I := 0 to ProfessoresLista.Count - 1 do begin
     professor := ProfessoresLista[I];
-    professoresbox.AddItem(inttostr(Professor.Codigo) + ' - ' + professor.Nome + ' - ' + professor.CPF, professor);
+    professoresbox.AddItem(inttostr(Professor.Codigo) + ' -       ' + professor.Nome + ' / ' + professor.CPF, professor);
   end;
 
 end;
@@ -747,7 +785,7 @@ begin
 
   for I := 0 to AlunosLista.Count - 1 do begin
     aluno := AlunosLista[I];
-    Alunosbox.AddItem(inttostr(Aluno.Codigo) + ' - ' + aluno.Nome, aluno);
+    Alunosbox.AddItem(inttostr(Aluno.Codigo) + ' -       ' + aluno.Nome, aluno);
   end;
 
 end;
@@ -773,7 +811,7 @@ begin
     if (professor = nil) or (disciplina = nil) then
       Continue;
 
-    textoTurma := IntToStr(turma.cod) + ' - ' + professor.nome + ' / ' + disciplina.nome;
+    textoTurma := IntToStr(turma.cod) + ' -       ' + professor.nome + ' / ' + disciplina.nome;
 
 
     TurmasBox.AddItem(textoTurma, turma);
@@ -820,6 +858,16 @@ begin
       Exit(turma);
   end;
   Result := nil;
+end;
+
+function TCRUD_escolar.confirmarexclusao: Boolean;
+begin
+  Result := MessageDlg(
+    'Confirma a exclusão?',
+    mtConfirmation,
+    [mbYes, mbNo],  // botões
+    0               // help context (geralmente 0)
+  ) = mrYes;
 end;
 
 function TCRUD_escolar.BuscarDisciplinaPorID(id: Integer): TDisciplina;
@@ -871,6 +919,12 @@ fillmatriculas;
 end;
 
 
+
+procedure TCRUD_escolar.PageControl1Change(Sender: TObject);
+begin
+fillturmas;
+fillmatriculas;
+end;
 
 procedure TCRUD_escolar.popularListaAlunos;
 var
@@ -1054,12 +1108,6 @@ begin
 //final da logica pra combo box de Professores
 end;
 
-procedure TCRUD_escolar.ComecarAsBox;
-begin
-professoresbox.AddItem('ID -    NOME    -   CPF   ', nil);
-alunosbox.AddItem('ID -    NOME', nil);
-Disciplinasbox.AddItem('ID -    NOME', nil);
-end;
 
 end.
 

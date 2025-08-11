@@ -58,7 +58,7 @@ begin
   end;
 
   try
-  showmessage(inttostr(id));
+  //showmessage(inttostr(id));
     if not edit then
     begin
       turma := TTurma(ComboBoxTurmas.Items.Objects[ComboBoxTurmas.ItemIndex]);

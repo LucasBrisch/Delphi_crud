@@ -78,7 +78,7 @@ begin
     professor_editado.Nome := professornomeedit.Text;
     Professor_editado.codigo := strtoint(professorcodedit.Text);
 
-    ShowMessage('Aluno editado com sucesso!');
+    ShowMessage('Professor editado com sucesso!');
     ModalResult := mrOk;  // mrOK serve pra informar sucesso
     resetform;
     edit := false;

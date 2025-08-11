@@ -68,8 +68,8 @@ object frmTurmasCRUD: TfrmTurmasCRUD
         Width = 273
         Height = 23
         Align = alClient
+        Style = csDropDownList
         TabOrder = 0
-        Text = 'ComboBoxProfessores'
       end
     end
     object TurmaCodHolder: TPanel
@@ -164,8 +164,8 @@ object frmTurmasCRUD: TfrmTurmasCRUD
         Width = 273
         Height = 23
         Align = alClient
+        Style = csDropDownList
         TabOrder = 0
-        Text = 'ComboBoxDisciplinas'
       end
     end
   end

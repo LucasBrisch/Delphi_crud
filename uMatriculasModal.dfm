@@ -68,8 +68,8 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Width = 273
         Height = 23
         Align = alClient
+        Style = csDropDownList
         TabOrder = 0
-        Text = 'ComboBoxAlunos'
       end
     end
     object MatriculaCodHolder: TPanel
@@ -164,8 +164,8 @@ object frmMatriculasCRUD: TfrmMatriculasCRUD
         Width = 273
         Height = 23
         Align = alClient
+        Style = csDropDownList
         TabOrder = 0
-        Text = 'ComboBoxAlunos'
       end
     end
   end

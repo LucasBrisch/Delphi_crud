@@ -18,10 +18,11 @@ object CRUD_escolar: TCRUD_escolar
     Top = 0
     Width = 1027
     Height = 665
-    ActivePage = TabSheet4
+    ActivePage = Professores
     Align = alClient
     TabOrder = 0
     OnChange = PageControl1Change
+    ExplicitLeft = 8
     object TabSheet4: TTabSheet
       Caption = 'Turmas'
       ImageIndex = 3
@@ -336,11 +337,11 @@ object CRUD_escolar: TCRUD_escolar
         object Label8: TLabel
           Left = 387
           Top = 0
-          Width = 62
+          Width = 117
           Height = 41
           Align = alLeft
           Alignment = taCenter
-          Caption = 'NOME'
+          Caption = 'NOME / CPF'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -21

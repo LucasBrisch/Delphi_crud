@@ -99,6 +99,10 @@ type
     procedure Excluir_matriculasClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
 
+    function DesativarRegistroComCascata(const Tabela: string; ID: Integer): Boolean;
+
+
+
 
   private
     { Private declarations }
@@ -153,7 +157,7 @@ var
   textoMatricula: string;
 begin
 
-  preenchercombobox_matriculas;
+  self.preenchercombobox_matriculas;
 
 
   if umatriculasmodal.frmMatriculasCRUD.ShowModal <> mrOk then
@@ -426,7 +430,7 @@ for i := 0 to Professoreslista.Count - 1 do begin
     professoreslista[i].Nome := uprofessoresmodal.frmprofessoresCRUD.professor_editado.nome;
 
     professoresbox.Items.Delete(professoresbox.ItemIndex);
-    professoresbox.items.Insert(i, inttostr(professoreslista[i].codigo) + ' - ' + professoreslista[i].Nome + ' - ' + professoresLista[i].CPF);
+    professoresbox.items.Insert(i, inttostr(professoreslista[i].codigo) + ' -       ' + professoreslista[i].Nome + ' - ' + professoresLista[i].CPF);
 
     exit
   end;
@@ -517,6 +521,12 @@ begin
         showmessage('excluido com sucesso');
 
 
+        //chamada da função de verificação de dependencias
+        if Self.DesativarRegistroComCascata('alunos', aluno.codigo) then
+        begin
+          ShowMessage('Dependências excluídas com sucesso!');
+        end;
+
         // logica nova
 
         Alunosbox.Items.Delete(alunosbox.ItemIndex);
@@ -558,6 +568,13 @@ begin
         dmDatabase.InsertQuery.SQL.Text := 'UPDATE disciplinas SET ativo = false WHERE ID = ' + idString;
         dmDatabase.InsertQuery.ExecSQL;
         showmessage('excluido com sucesso');
+
+        //chamada a função q verifica dependencias
+        if Self.DesativarRegistroComCascata('disciplinas', disciplina.Cod) then
+        begin
+          ShowMessage('Dependências excluídas com sucesso!');
+        end;
+
         // logica nova
 
         Disciplinasbox.Items.Delete(Disciplinasbox.ItemIndex);
@@ -642,6 +659,13 @@ begin
         dmDatabase.InsertQuery.SQL.Text := 'UPDATE professores SET ativo = false WHERE ID = ' + idString;
         dmDatabase.InsertQuery.ExecSQL;
         showmessage('excluido com sucesso');
+
+
+      // chamada da função q verifica dependencias
+        if DesativarRegistroComCascata('professores', professor.Codigo) then
+      begin
+        ShowMessage('Dependencias excluidas com sucesso!');
+      end;
         // logica nova
 
         Professoresbox.Items.Delete(professoresbox.ItemIndex);
@@ -650,10 +674,11 @@ begin
             professoreslista.Remove(professor);
             exit
           end;
-
         end;
 
         //logica nova
+
+
       except
         showmessage('erro')
       end;
@@ -697,6 +722,12 @@ begin
         end;
 
         //logica nova
+
+        //   if Self.DesativarRegistroComCascata('turmas', turma.Cod) then
+       //   begin
+          //   ShowMessage('Dependências excluídas com sucesso!');
+
+         //end;
       except
         showmessage('erro')
       end;
@@ -868,6 +899,125 @@ begin
     [mbYes, mbNo],  // botões
     0               // help context (geralmente 0)
   ) = mrYes;
+end;
+
+
+
+function TCRUD_escolar.DesativarRegistroComCascata(const Tabela: string;
+  ID: Integer): Boolean;
+type
+  // Criamos um tipo de registro para "fila de tarefas"
+  TRegistroParaDesativar = record
+    NomeTabela: string;
+    IDRegistro: Integer;
+  end;
+var
+  FilaParaDesativar: TList<TRegistroParaDesativar>;
+  RegistroAtual: TRegistroParaDesativar;
+  idsDependentes: TStringList;
+  TabelaFilha, CampoChaveEstrangeira, SQL: string;
+  i: Integer;
+begin
+  Result := False; // Assume falha
+  FilaParaDesativar := TList<TRegistroParaDesativar>.Create;
+  idsDependentes := TStringList.Create;
+  try
+    // Adiciona o primeiro item que o usuário quer deletar na fila
+    RegistroAtual.NomeTabela := Tabela;
+    RegistroAtual.IDRegistro := ID;
+    FilaParaDesativar.Add(RegistroAtual);
+
+    // --- Loop principal: processa a fila até ela ficar vazia ---
+    while FilaParaDesativar.Count > 0 do
+    begin
+      // Pega o primeiro item da fila
+      RegistroAtual := FilaParaDesativar[0];
+      FilaParaDesativar.Delete(0); // Remove da fila
+
+      // --- MAPA DE DEPENDÊNCIAS (Corrigido com if..else if) ---
+      if RegistroAtual.NomeTabela.ToLower = 'professores' then
+      begin
+        TabelaFilha := 'turmas';
+        CampoChaveEstrangeira := 'fk_id_professor';
+      end
+      else if RegistroAtual.NomeTabela.ToLower = 'disciplinas' then
+      begin
+        TabelaFilha := 'turmas';
+        CampoChaveEstrangeira := 'fk_id_disciplina';
+      end
+      else if RegistroAtual.NomeTabela.ToLower = 'alunos' then
+      begin
+        TabelaFilha := 'matriculas';
+        CampoChaveEstrangeira := 'fk_id_estudante';
+      end
+      else if RegistroAtual.NomeTabela.ToLower = 'turmas' then
+      begin
+        TabelaFilha := 'matriculas';
+        CampoChaveEstrangeira := 'fk_id_turma';
+      end
+      else
+      begin
+        TabelaFilha := ''; // Sem dependentes conhecidos
+      end;
+      // ----------------------------------------------------
+
+      // Se este registro pode ter filhos...
+      if TabelaFilha <> '' then
+      begin
+        // Usando seu dmDatabase.SelectQuery
+        dmDatabase.SelectQuery.Close;
+        SQL := Format('SELECT id FROM %s WHERE %s = :id AND ativo = true', [TabelaFilha, CampoChaveEstrangeira]);
+        dmDatabase.SelectQuery.SQL.Text := SQL;
+        dmDatabase.SelectQuery.ParamByName('id').AsInteger := RegistroAtual.IDRegistro;
+        dmDatabase.SelectQuery.Open;
+
+        // Se encontrou filhos...
+        if not dmDatabase.SelectQuery.IsEmpty then
+        begin
+          idsDependentes.Clear;
+          while not dmDatabase.SelectQuery.Eof do
+          begin
+            idsDependentes.Add(dmDatabase.SelectQuery.FieldByName('id').AsString);
+            dmDatabase.SelectQuery.Next;
+          end;
+
+          if MessageDlg(Format('O item da tabela "%s" (ID: %d) tem %d dependente(s) ativo(s) na tabela "%s".' +
+            #13#10 + 'Deseja desativar estes dependentes também?',
+            [RegistroAtual.NomeTabela, RegistroAtual.IDRegistro, idsDependentes.Count, TabelaFilha]),
+            mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+          begin
+            ShowMessage('Operação cancelada.');
+            Exit; // Sai da função inteira, retornando False
+          end;
+
+          // Se o usuário disse SIM, adiciona os filhos na fila para serem processados
+          for i := 0 to idsDependentes.Count - 1 do
+          begin
+            var NovoRegistro: TRegistroParaDesativar;
+            NovoRegistro.NomeTabela := TabelaFilha;
+            NovoRegistro.IDRegistro := StrToInt(idsDependentes[i]);
+            FilaParaDesativar.Add(NovoRegistro);
+          end;
+        end;
+        dmDatabase.SelectQuery.Close;
+      end;
+
+      // Desativa o registro atual que foi processado
+      dmDatabase.DeleteQuery.Close;
+      SQL := Format('UPDATE %s SET ativo = false WHERE id = :id', [RegistroAtual.NomeTabela]);
+      dmDatabase.DeleteQuery.SQL.Text := SQL;
+      dmDatabase.DeleteQuery.ParamByName('id').AsInteger := RegistroAtual.IDRegistro;
+      dmDatabase.DeleteQuery.ExecSQL;
+    end;
+    popularlistamatriculas;
+    popularlistaturmas;
+    fillmatriculas;
+    fillturmas;
+    Result := True; // Se o loop terminou, tudo foi processado com sucesso
+  finally
+    FilaParaDesativar.Free;
+    idsDependentes.Free;
+  end;
 end;
 
 function TCRUD_escolar.BuscarDisciplinaPorID(id: Integer): TDisciplina;
@@ -1072,6 +1222,7 @@ begin
   for turma in TurmasLista do
   begin
 
+
     professor := BuscarProfessorPorID(turma.codprofessor);
     disciplina := BuscarDisciplinaPorID(turma.CodDisciplina);
 
@@ -1107,6 +1258,10 @@ begin
   end;
 //final da logica pra combo box de Professores
 end;
+
+
+
+
 
 
 end.

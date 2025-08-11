@@ -18,7 +18,7 @@ object CRUD_escolar: TCRUD_escolar
     Top = 0
     Width = 1027
     Height = 665
-    ActivePage = TabSheet5
+    ActivePage = Professores
     Align = alClient
     TabOrder = 0
     OnChange = PageControl1Change
@@ -49,9 +49,7 @@ object CRUD_escolar: TCRUD_escolar
           Caption = 'Adicionar'
           TabOrder = 0
           OnClick = Adicionar_turmasClick
-          ExplicitLeft = 16
-          ExplicitTop = 1
-          ExplicitHeight = 63
+          ExplicitTop = -3
         end
         object Editar_turmas: TButton
           AlignWithMargins = True
@@ -368,9 +366,7 @@ object CRUD_escolar: TCRUD_escolar
           Caption = 'Excluir'
           TabOrder = 2
           OnClick = Excluir_alunosClick
-          ExplicitLeft = 268
-          ExplicitTop = 1
-          ExplicitHeight = 63
+          ExplicitTop = -3
         end
       end
       object AlunosBox: TListBox

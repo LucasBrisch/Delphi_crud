@@ -154,6 +154,14 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="uRestaurarModal.pas">
+            <Form>frmRestaurarModal</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uRestaurarMain.pas">
+            <Form>Form2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

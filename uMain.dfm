@@ -18,11 +18,10 @@ object CRUD_escolar: TCRUD_escolar
     Top = 0
     Width = 1027
     Height = 665
-    ActivePage = Professores
+    ActivePage = TabSheet5
     Align = alClient
     TabOrder = 0
     OnChange = PageControl1Change
-    ExplicitLeft = 8
     object TabSheet4: TTabSheet
       Caption = 'Turmas'
       ImageIndex = 3
@@ -55,7 +54,6 @@ object CRUD_escolar: TCRUD_escolar
           Font.Name = 'Sitka Heading'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 840
           ExplicitHeight = 62
         end
         object Adicionar_turmas: TButton
@@ -123,10 +121,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitLeft = 0
-        ExplicitTop = 106
-        ExplicitWidth = 1019
-        ExplicitHeight = 529
       end
       object Panel7: TPanel
         AlignWithMargins = True
@@ -143,7 +137,6 @@ object CRUD_escolar: TCRUD_escolar
         Caption = 'Panel1'
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 65
         object Label5: TLabel
           Left = 300
           Top = 0
@@ -231,7 +224,6 @@ object CRUD_escolar: TCRUD_escolar
           Font.Name = 'Sitka Heading'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 734
           ExplicitHeight = 62
         end
         object Adicionar_Professores: TButton
@@ -279,6 +271,22 @@ object CRUD_escolar: TCRUD_escolar
           TabOrder = 2
           OnClick = Excluir_professoresClick
         end
+        object Restaurar_professores: TButton
+          AlignWithMargins = True
+          Left = 393
+          Top = 0
+          Width = 111
+          Height = 65
+          Margins.Left = 15
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Align = alLeft
+          Caption = 'Restaurar'
+          TabOrder = 3
+          OnClick = Restaurar_professoresClick
+          ExplicitLeft = 401
+        end
       end
       object ProfessoresBox: TListBox
         AlignWithMargins = True
@@ -299,8 +307,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitTop = 106
-        ExplicitHeight = 504
       end
       object Panel9: TPanel
         AlignWithMargins = True
@@ -317,7 +323,6 @@ object CRUD_escolar: TCRUD_escolar
         Caption = 'Panel1'
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 65
         object Label7: TLabel
           Left = 300
           Top = 0
@@ -453,6 +458,23 @@ object CRUD_escolar: TCRUD_escolar
           TabOrder = 2
           OnClick = Excluir_alunosClick
         end
+        object Restaurar_alunos: TButton
+          AlignWithMargins = True
+          Left = 393
+          Top = 0
+          Width = 111
+          Height = 65
+          Margins.Left = 15
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Align = alLeft
+          Caption = 'Restaurar'
+          TabOrder = 3
+          OnClick = Restaurar_alunosClick
+          ExplicitLeft = 495
+          ExplicitTop = -8
+        end
       end
       object AlunosBox: TListBox
         AlignWithMargins = True
@@ -473,8 +495,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitTop = 131
-        ExplicitHeight = 479
       end
       object Panel2: TPanel
         AlignWithMargins = True
@@ -491,7 +511,6 @@ object CRUD_escolar: TCRUD_escolar
         Caption = 'Panel1'
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 73
         object Label1: TLabel
           Left = 300
           Top = 0
@@ -522,7 +541,6 @@ object CRUD_escolar: TCRUD_escolar
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 387
           ExplicitHeight = 30
         end
         object Panel4: TPanel
@@ -581,7 +599,6 @@ object CRUD_escolar: TCRUD_escolar
           Font.Name = 'Sitka Heading'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 757
           ExplicitHeight = 62
         end
         object Adicionar_matriculas: TButton
@@ -649,8 +666,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitTop = 106
-        ExplicitHeight = 504
       end
       object Panel1: TPanel
         AlignWithMargins = True
@@ -667,7 +682,6 @@ object CRUD_escolar: TCRUD_escolar
         Caption = 'Panel1'
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 62
         object ID: TLabel
           Left = 300
           Top = 0
@@ -682,7 +696,6 @@ object CRUD_escolar: TCRUD_escolar
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 297
           ExplicitHeight = 30
         end
         object NOME: TLabel
@@ -711,7 +724,6 @@ object CRUD_escolar: TCRUD_escolar
           Caption = 'Panel2'
           ShowCaption = False
           TabOrder = 0
-          ExplicitLeft = 324
         end
         object Panel13: TPanel
           Left = 0
@@ -818,6 +830,22 @@ object CRUD_escolar: TCRUD_escolar
           TabOrder = 2
           OnClick = Excluir_disciplinasClick
         end
+        object Restaurar_Disciplinas: TButton
+          AlignWithMargins = True
+          Left = 393
+          Top = 0
+          Width = 111
+          Height = 65
+          Margins.Left = 15
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Align = alLeft
+          Caption = 'Restaurar'
+          TabOrder = 3
+          OnClick = Restaurar_DisciplinasClick
+          ExplicitLeft = 401
+        end
       end
       object DisciplinasBox: TListBox
         AlignWithMargins = True
@@ -838,8 +866,6 @@ object CRUD_escolar: TCRUD_escolar
         ItemHeight = 32
         ParentFont = False
         TabOrder = 1
-        ExplicitTop = 131
-        ExplicitHeight = 479
       end
       object Panel5: TPanel
         AlignWithMargins = True
@@ -856,7 +882,6 @@ object CRUD_escolar: TCRUD_escolar
         Caption = 'Panel1'
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 93
         object Label3: TLabel
           Left = 300
           Top = 0

@@ -34,4 +34,9 @@ object DmDatabase: TDmDatabase
     Left = 112
     Top = 88
   end
+  object updateQuery: TFDQuery
+    Connection = Conexao
+    Left = 208
+    Top = 96
+  end
 end

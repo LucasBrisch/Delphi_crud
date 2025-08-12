@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, uconnection, system.Generics.Collections,
-  Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal, uTurmasModal, uMatriculasModal,uprofessor, ualuno, udisciplina, uturma, umatricula;
+  Vcl.Grids, uAlunosModal, uProfessoresModal, uDisciplinasModal,urestaurarmodal, uTurmasModal,uRestaurarMain, uMatriculasModal,uprofessor, ualuno, udisciplina, uturma, umatricula;
 
 type
   TCRUD_escolar = class(TForm)
@@ -70,6 +70,9 @@ type
     Label9: TLabel;
     Label10: TLabel;
     Label11: TLabel;
+    Restaurar_alunos: TButton;
+    Restaurar_professores: TButton;
+    Restaurar_Disciplinas: TButton;
     procedure Adicionar_alunosClick(Sender: TObject);
     procedure filldisciplinas;
     procedure fillstudents;
@@ -110,6 +113,10 @@ type
     procedure PageControl1Change(Sender: TObject);
 
     function DesativarRegistroComCascata(const Tabela: string; ID: Integer): Boolean;
+    procedure Restaurar_alunosClick(Sender: TObject);
+    procedure Restaurar (tabela : String);
+    procedure Restaurar_professoresClick(Sender: TObject);
+    procedure Restaurar_DisciplinasClick(Sender: TObject);
 
 
 
@@ -142,7 +149,7 @@ begin
   // logica nova
 
   alunoslista.Add(uAlunosmodal.frmAlunosCRUD.aluno_editado);
-  Alunosbox.AddItem(inttostr(uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo) + ' -       ' + uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome, nil);
+  Alunosbox.AddItem(inttostr(uAlunosmodal.frmAlunosCRUD.aluno_editado.Codigo) + ' -       ' + uAlunosmodal.frmAlunosCRUD.aluno_editado.Nome, uAlunosmodal.frmAlunosCRUD.aluno_editado);
 
   //logica nova
 end;
@@ -152,7 +159,7 @@ begin
   if frmDisciplinasCRUD.ShowModal <> mrOk then
     Exit;
   Disciplinaslista.Add(uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada);
-  Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' -       ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, nil);
+  Disciplinasbox.AddItem(inttostr(uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Cod) + ' -       ' + uDisciplinasmodal.frmDisciplinasCRUD.Disciplina_editada.Nome, uDisciplinasmodal.frmDisciplinasCRUD.disciplina_editada);
 end;
 
 
@@ -1270,9 +1277,37 @@ begin
 end;
 
 
+procedure TCRUD_escolar.Restaurar_alunosClick(Sender: TObject);
+begin
+  Restaurar('alunos')
+end;
 
+procedure TCRUD_escolar.Restaurar_DisciplinasClick(Sender: TObject);
+begin
+  Restaurar('disciplinas')
+end;
 
+procedure TCRUD_escolar.Restaurar_professoresClick(Sender: TObject);
+begin
+  Restaurar('professores')
+end;
 
+procedure TCRUD_escolar.Restaurar(tabela: String);
+begin
+    frmrestaurarModal.NomeTabela := Tabela;
+    frmRestaurarModal.showmodal;
+
+    if tabela = 'alunos' then begin
+      popularlistaalunos;
+      fillstudents;
+    end else if tabela = 'professores' then begin
+      popularlistaprofessores;
+      fillprofessores
+    end else if tabela = 'disciplinas' then begin
+      popularlistadisciplinas;
+      filldisciplinas;
+    end;
+end;
 
 end.
 

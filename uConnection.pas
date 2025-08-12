@@ -17,6 +17,7 @@ type
     insertQuery: TFDQuery;
     SelectQuery: TFDQuery;
     DeleteQuery: TFDQuery;
+    updateQuery: TFDQuery;
   private
     { Private declarations }
   public

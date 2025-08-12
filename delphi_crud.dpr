@@ -8,7 +8,9 @@ uses
   uDisciplinasModal in 'uDisciplinasModal.pas' {frmDisciplinasCRUD},
   uTurmasModal in 'uTurmasModal.pas' {frmTurmasCRUD},
   uMatriculasModal in 'uMatriculasModal.pas' {frmMatriculasCRUD},
-  uConnection in 'uConnection.pas' {DmDatabase: TDataModule};
+  uConnection in 'uConnection.pas' {DmDatabase: TDataModule},
+  uRestaurarModal in 'uRestaurarModal.pas' {frmRestaurarModal},
+  uRestaurarMain in 'uRestaurarMain.pas' {Form2};
 
 {$R *.res}
 
@@ -22,6 +24,7 @@ begin
   Application.CreateForm(TfrmDisciplinasCRUD, frmDisciplinasCRUD);
   Application.CreateForm(TfrmTurmasCRUD, frmTurmasCRUD);
   Application.CreateForm(TfrmMatriculasCRUD, frmMatriculasCRUD);
-
+  Application.CreateForm(TfrmRestaurarModal, frmRestaurarModal);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.
